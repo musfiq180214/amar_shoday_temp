@@ -1,12 +1,13 @@
-import 'package:amar_shoday/features/home/landing_page_2.dart';
-import 'package:amar_shoday/features/onboarding/language_page.dart';
-import 'package:amar_shoday/features/onboarding/splash_page.dart';
-import 'package:amar_shoday/features/onboarding/suggest_area_page.dart';
-import 'package:amar_shoday/features/search_results/search_results_page.dart';
+import 'package:amar_shoday/features/home/presentation/landing_page_2.dart';
+import 'package:amar_shoday/features/onboarding/presentation/language_page.dart';
+import 'package:amar_shoday/features/onboarding/presentation/splash_page.dart';
+import 'package:amar_shoday/features/onboarding/presentation/suggest_area_page.dart';
+import 'package:amar_shoday/features/recommended_products/presentation/recc_product_page.dart';
+import 'package:amar_shoday/features/search_results/presentation/search_results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
 
-import 'package:amar_shoday/features/landing.dart';
+import 'package:amar_shoday/features/landing/presntation/landing.dart';
 // import 'package:amar_shoday/features/no_internet/presentation/no_internet.dart';
 
 class AppRouter {
@@ -29,9 +30,9 @@ class AppRouter {
         return MaterialPageRoute(
           builder: (_) => SearchResultsPage(searchQuery: query),
         );
+      case RouteNames.reccProducts:
+        return MaterialPageRoute(builder: (_) => const ReccProductsScreen());
 
-      // case RouteNames.noInternet:
-      //   return MaterialPageRoute(builder: (_) => NoInternetPage());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(

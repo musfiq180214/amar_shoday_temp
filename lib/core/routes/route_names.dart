@@ -7,4 +7,5 @@ class RouteNames {
   static const String noInternet = '/no-internet';
   static const String githubRepos = '/github-repos';
   static const String searchResults = '/search-results';
+  static const String reccProducts = '/recc-products';
 }
