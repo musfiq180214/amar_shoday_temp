@@ -14,7 +14,13 @@ class ReccProductsScreen extends StatelessWidget {
     "Pomagranate",
     "Water Melon",
     "Pineapple",
-    "Aarong Ghee"
+    "Aarong Ghee",
+    "Soyabean Oil",
+    "Aci Pure Chilli",
+    "Dabur Honey",
+    "Diploma Milk",
+    "Nescafe Classic",
+    "Lux Body Wash"
   ];
 
   final Map<String, String> productImages = const {
@@ -27,7 +33,14 @@ class ReccProductsScreen extends StatelessWidget {
     "Pomagranate": "assets/Pomagranate.png",
     "Water Melon": "assets/Water_Melon.png",
     "Pineapple": "assets/PineApple.png",
-    "Aarong Ghee": "assets/aarong_ghee.png"
+    "Aarong Ghee": "assets/aarong_ghee.png",
+    "Soyabean Oil": "assets/soyabin_oil.png",
+    "Aci Pure Chilli": "assets/aci_pure_chili.png",
+    "Dabur Honey": "assets/Dubor_Honey.png",
+    "Diploma Milk": "assets/Diploma_Milk.png",
+    "Nescafe Classic": "assets/Nescafe_Classic.png",
+    "Lifebuoy Handwash": "assets/Lifebuoy_HandWash.png",
+    "Lux Body Wash": "assets/lux_body_wash.png"
   };
 
   @override
@@ -187,8 +200,8 @@ class ReccProductsScreen extends StatelessWidget {
                                         children: [
                                           const SizedBox(height: 20),
                                           SizedBox(
-                                            height: 70,
-                                            width: 70,
+                                            height: 80,
+                                            width: 80,
                                             child: imgPath != null
                                                 ? FittedBox(
                                                     fit: BoxFit.contain,
@@ -230,6 +243,12 @@ class ReccProductsScreen extends StatelessWidget {
                                       top: 0,
                                       left: 0,
                                       child: _buildDiscount("15% Off"),
+                                    ),
+                                  if (product == "Aci Pure Chilli")
+                                    Positioned(
+                                      top: 0,
+                                      left: 0,
+                                      child: _buildDiscount("10% Off"),
                                     ),
                                   Positioned(
                                     top: 4,

@@ -1,11 +1,17 @@
+import 'package:amar_shoday/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class SearchResultsPage extends StatelessWidget {
+class SearchResultsPage extends StatefulWidget {
   final String searchQuery;
 
   const SearchResultsPage({super.key, required this.searchQuery});
 
+  @override
+  State<SearchResultsPage> createState() => _SearchResultsPageState();
+}
+
+class _SearchResultsPageState extends State<SearchResultsPage> {
   final List<String> products = const [
     "Marium Date",
     "Golden Apple",
@@ -28,30 +34,29 @@ class SearchResultsPage extends StatelessWidget {
     "Pineapple": "assets/PineApple.png",
   };
 
+  late final TextEditingController searchController;
+  int _currentIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    searchController = TextEditingController(text: widget.searchQuery);
+  }
+
+  void _performNewSearch() {
+    final newQuery = searchController.text.trim();
+    if (newQuery.isNotEmpty) {
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(
+          builder: (_) => SearchResultsPage(searchQuery: newQuery),
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
-    final TextEditingController searchController =
-        TextEditingController(text: searchQuery); // prefill with query
-
-    // Split products into rows of 3 for grid layout
-    List<List<String>> productRows = [];
-    for (var i = 0; i < products.length; i += 3) {
-      productRows.add(products.sublist(
-          i, i + 3 > products.length ? products.length : i + 3));
-    }
-
-    void performNewSearch() {
-      String newQuery = searchController.text.trim();
-      if (newQuery.isNotEmpty) {
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(
-            builder: (_) => SearchResultsPage(searchQuery: newQuery),
-          ),
-        );
-      }
-    }
-
     return Scaffold(
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(130),
@@ -68,11 +73,8 @@ class SearchResultsPage extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        Image.asset(
-                          "assets/location_icon.png",
-                          width: 20,
-                          height: 20,
-                        ),
+                        Image.asset("assets/location_icon.png",
+                            width: 20, height: 20),
                         const SizedBox(width: 4),
                         const Text("Bosila, Dhaka",
                             style:
@@ -88,7 +90,7 @@ class SearchResultsPage extends StatelessWidget {
                         }
                       },
                       icon: const Icon(Icons.language, color: Colors.white),
-                    )
+                    ),
                   ],
                 ),
               ),
@@ -113,11 +115,14 @@ class SearchResultsPage extends StatelessWidget {
                               const Icon(Icons.arrow_back, color: Colors.grey),
                           onPressed: () => Navigator.pop(context),
                         ),
-                        Text('search_result'.tr(),
-                            style: TextStyle(
-                                color: Colors.indigo.shade900,
-                                fontSize: 16,
-                                fontWeight: FontWeight.bold)),
+                        Text(
+                          'search_result'.tr(),
+                          style: TextStyle(
+                            color: Colors.indigo.shade900,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
                         Container(
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
@@ -125,11 +130,8 @@ class SearchResultsPage extends StatelessWidget {
                           ),
                           padding: const EdgeInsets.all(2),
                           child: IconButton(
-                            icon: Image.asset(
-                              'assets/bell_icon.png',
-                              width: 30,
-                              height: 30,
-                            ),
+                            icon: Image.asset('assets/bell_icon.png',
+                                width: 30, height: 30),
                             onPressed: () {},
                             iconSize: 20,
                             padding: EdgeInsets.zero,
@@ -145,237 +147,211 @@ class SearchResultsPage extends StatelessWidget {
           ),
         ),
       ),
-      body: Stack(
+      body: Column(
         children: [
-          // Scrollable content
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+          // 🔍 Search Bar
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.white,
+                border: Border.all(color: Colors.black, width: 1),
+                borderRadius: BorderRadius.circular(6),
+              ),
+              clipBehavior: Clip.antiAlias,
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
+                child: Row(
+                  children: [
+                    const SizedBox(width: 8),
+                    Expanded(
+                      child: TextField(
+                        controller: searchController,
+                        decoration: const InputDecoration(
+                          hintText: 'Search by product, brand',
+                          border: InputBorder.none,
+                        ),
+                        onSubmitted: (_) => _performNewSearch(),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: _performNewSearch,
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 12, vertical: 8),
+                        margin: const EdgeInsets.only(right: 8),
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                          borderRadius: BorderRadius.circular(6),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const Icon(Icons.search, color: Colors.white),
+                            const SizedBox(width: 4),
+                            Text('search'.tr(),
+                                style: const TextStyle(color: Colors.white)),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ),
+
+          // Search Info
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            child: Row(
               children: [
-                // 🔍 Search bar
-                Container(
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    border: Border.all(
-                      color: Colors.black,
-                      width: 1,
-                    ),
-                    borderRadius: BorderRadius.circular(6),
-                  ),
-                  clipBehavior: Clip.antiAlias,
-                  child: Padding(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 5, horizontal: 5),
-                    child: Row(
-                      children: [
-                        const SizedBox(width: 8),
-                        Expanded(
-                          child: TextField(
-                            controller: searchController,
-                            decoration: const InputDecoration(
-                              hintText: 'Search by product, brand',
-                              border: InputBorder.none,
-                            ),
-                            onSubmitted: (_) => performNewSearch(),
-                          ),
-                        ),
-                        GestureDetector(
-                          onTap: performNewSearch,
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 12, vertical: 8),
-                            margin: const EdgeInsets.only(right: 8),
-                            decoration: BoxDecoration(
-                              color: Colors.green,
-                              borderRadius: BorderRadius.circular(6),
-                            ),
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                const Icon(Icons.search, color: Colors.white),
-                                const SizedBox(width: 4),
-                                Text(
-                                  'search'.tr(),
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
+                Text(
+                  '"${widget.searchQuery}"',
+                  style: const TextStyle(
+                      fontWeight: FontWeight.bold, fontSize: 16),
                 ),
-
-                const SizedBox(height: 12),
-
-                // Display searchQuery with double quotes
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: Row(
-                    children: [
-                      Text(
-                        '"$searchQuery"',
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
-                      Text(
-                        ' ${products.length} products are found',
-                        style: const TextStyle(
-                          fontSize: 16,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-
-                const SizedBox(height: 12),
-
-                // 📦 Product grid
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Column(
-                    children: productRows.map((row) {
-                      return Row(
-                        children: List.generate(3, (index) {
-                          final product =
-                              index < row.length ? row[index] : null;
-                          if (product == null) {
-                            return const Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.all(6.0),
-                                child: SizedBox(
-                                  height: 140,
-                                  width: double.infinity,
-                                ),
-                              ),
-                            );
-                          }
-                          final imgPath = productImages[product];
-                          return Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Stack(
-                                children: [
-                                  SizedBox(
-                                    height: 140,
-                                    width: double.infinity,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            color: Colors.grey.shade400),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          SizedBox(
-                                            height: 60,
-                                            width: 60,
-                                            child: imgPath != null
-                                                ? FittedBox(
-                                                    fit: BoxFit.contain,
-                                                    child: Image.asset(imgPath),
-                                                  )
-                                                : FittedBox(
-                                                    fit: BoxFit.contain,
-                                                    child: Text(
-                                                      product[0],
-                                                      style: const TextStyle(
-                                                          fontSize: 16),
-                                                    ),
-                                                  ),
-                                          ),
-                                          const SizedBox(height: 6),
-                                          SizedBox(
-                                            height: 50,
-                                            child: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: Text(
-                                                product,
-                                                textAlign: TextAlign.center,
-                                                maxLines: 2,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  if (product == "Marium Date")
-                                    Positioned(
-                                      top: 0,
-                                      left: 0,
-                                      child: _buildDiscount("35% Off"),
-                                    ),
-                                  if (product == "Golden Apple")
-                                    Positioned(
-                                      top: 0,
-                                      left: 0,
-                                      child: _buildDiscount("15% Off"),
-                                    ),
-                                  Positioned(
-                                    top: 4,
-                                    right: 4,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white,
-                                      ),
-                                      padding: const EdgeInsets.all(4),
-                                      child: const Icon(Icons.favorite_border,
-                                          color: Colors.green, size: 16),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
-                      );
-                    }).toList(),
-                  ),
-                ),
-
-                const SizedBox(height: 80),
+                Text(' ${products.length} products found',
+                    style: const TextStyle(fontSize: 16)),
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              margin: const EdgeInsets.only(left: 0),
-              child: Image.asset("assets/empty.png", width: 60, height: 60),
+
+          const SizedBox(height: 8),
+
+          Expanded(
+            child: LayoutBuilder(
+              builder: (context, constraints) {
+                // Total width of the GridView
+                double totalWidth = constraints.maxWidth;
+                // Number of columns
+                int crossAxisCount = 3;
+                // Space between items
+                double spacing = 8;
+                // Calculate item width
+                double itemWidth =
+                    (totalWidth - (crossAxisCount - 1) * spacing) /
+                        crossAxisCount;
+                double itemHeight = itemWidth; // force square
+
+                return GridView.builder(
+                  padding: const EdgeInsets.all(8),
+                  gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: crossAxisCount,
+                    crossAxisSpacing: spacing,
+                    mainAxisSpacing: spacing,
+                    childAspectRatio:
+                        itemWidth / itemHeight, // will be 1 (square)
+                  ),
+                  itemCount: products.length,
+                  itemBuilder: (context, index) {
+                    final product = products[index];
+                    final imgPath = productImages[product];
+                    final discount = _getDiscount(product);
+
+                    return Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            border: Border.all(color: Colors.grey.shade400),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Column(
+                            children: [
+                              // Image area (fits in square)
+                              Expanded(
+                                flex: 6,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(6.0),
+                                  child: imgPath != null
+                                      ? Image.asset(
+                                          imgPath,
+                                          fit: BoxFit.contain,
+                                          width: double.infinity,
+                                          height: double.infinity,
+                                        )
+                                      : Center(
+                                          child: Text(
+                                            product[0],
+                                            style:
+                                                const TextStyle(fontSize: 18),
+                                          ),
+                                        ),
+                                ),
+                              ),
+                              // Text area
+                              Expanded(
+                                flex: 4,
+                                child: Padding(
+                                  padding:
+                                      const EdgeInsets.symmetric(horizontal: 4),
+                                  child: Text(
+                                    product,
+                                    textAlign: TextAlign.center,
+                                    maxLines: 2,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: const TextStyle(fontSize: 13),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                        // Discount badge
+                        if (discount != null)
+                          Positioned(
+                              top: 0, left: 0, child: _buildDiscount(discount)),
+
+                        // Favorite icon
+                        Positioned(
+                          top: 4,
+                          right: 4,
+                          child: Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            padding: const EdgeInsets.all(4),
+                            child: const Icon(Icons.favorite_border,
+                                color: Colors.green, size: 16),
+                          ),
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
             ),
-          ),
+          )
         ],
       ),
       bottomNavigationBar: ClipRRect(
         borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-        child: BottomNavigationBar(
-          backgroundColor: Colors.indigo.shade900,
-          type: BottomNavigationBarType.fixed,
-          selectedItemColor: Colors.green,
-          unselectedItemColor: Colors.white,
-          items: [
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.home), label: "home".tr()),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.category), label: "categories".tr()),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.favorite_border),
-                label: "favourite".tr()),
-            BottomNavigationBarItem(
-                icon: const Icon(Icons.more_horiz), label: "more".tr()),
-          ],
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+        child: CustomBottomNavBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            if (index != _currentIndex) {
+              setState(() => _currentIndex = index);
+            }
+          },
         ),
       ),
     );
+  }
+
+  String? _getDiscount(String product) {
+    switch (product) {
+      case "Marium Date":
+        return "35% Off";
+      case "Golden Apple":
+        return "15% Off";
+      default:
+        return null;
+    }
   }
 
   Widget _buildDiscount(String text) {

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:amar_shoday/core/routes/route_names.dart';
 import 'package:amar_shoday/features/search_results/presentation/search_results_page.dart';
+import 'package:amar_shoday/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -253,27 +254,39 @@ class _LandingPage2State extends State<LandingPage2>
             ),
           ),
           body: _buildBody(),
+          // bottomNavigationBar: ClipRRect(
+          //   borderRadius: const BorderRadius.only(
+          //       topLeft: Radius.circular(24), topRight: Radius.circular(24)),
+          //   child: BottomNavigationBar(
+          //     backgroundColor: Colors.indigo.shade900,
+          //     currentIndex: _navIndex,
+          //     onTap: (i) => setState(() => _navIndex = i),
+          //     type: BottomNavigationBarType.fixed,
+          //     selectedItemColor: Colors.green,
+          //     unselectedItemColor: Colors.white,
+          //     items: [
+          //       BottomNavigationBarItem(
+          //           icon: const Icon(Icons.home), label: "home".tr()),
+          //       BottomNavigationBarItem(
+          //           icon: const Icon(Icons.category), label: "categories".tr()),
+          //       BottomNavigationBarItem(
+          //           icon: const Icon(Icons.favorite_border),
+          //           label: "favourite".tr()),
+          //       BottomNavigationBarItem(
+          //           icon: const Icon(Icons.more_horiz), label: "more".tr()),
+          //     ],
+          //   ),
+          // ),
           bottomNavigationBar: ClipRRect(
             borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-            child: BottomNavigationBar(
-              backgroundColor: Colors.indigo.shade900,
+              topLeft: Radius.circular(24),
+              topRight: Radius.circular(24),
+            ),
+            child: CustomBottomNavBar(
               currentIndex: _navIndex,
-              onTap: (i) => setState(() => _navIndex = i),
-              type: BottomNavigationBarType.fixed,
-              selectedItemColor: Colors.green,
-              unselectedItemColor: Colors.white,
-              items: [
-                BottomNavigationBarItem(
-                    icon: const Icon(Icons.home), label: "home".tr()),
-                BottomNavigationBarItem(
-                    icon: const Icon(Icons.category), label: "categories".tr()),
-                BottomNavigationBarItem(
-                    icon: const Icon(Icons.favorite_border),
-                    label: "favourite".tr()),
-                BottomNavigationBarItem(
-                    icon: const Icon(Icons.more_horiz), label: "more".tr()),
-              ],
+              onTap: (index) {
+                setState(() => _navIndex = index);
+              },
             ),
           ),
         ),

@@ -1,4 +1,7 @@
+import 'package:amar_shoday/features/categories/presentation/categories_page.dart';
+import 'package:amar_shoday/features/favourites/presentation/favourites_page.dart';
 import 'package:amar_shoday/features/home/presentation/landing_page_2.dart';
+import 'package:amar_shoday/features/more/presentation/more_page.dart';
 import 'package:amar_shoday/features/onboarding/presentation/language_page.dart';
 import 'package:amar_shoday/features/onboarding/presentation/splash_page.dart';
 import 'package:amar_shoday/features/onboarding/presentation/suggest_area_page.dart';
@@ -21,6 +24,13 @@ class AppRouter {
         return MaterialPageRoute(builder: (_) => const SuggestAreaPage());
       case RouteNames.landing2:
         return MaterialPageRoute(builder: (_) => const LandingPage2());
+      case RouteNames.catogories:
+        return MaterialPageRoute(builder: (_) => const CategoriesPage());
+      case RouteNames.favourites:
+        return MaterialPageRoute(builder: (_) => const FavouritesPage());
+      case RouteNames.more:
+        return MaterialPageRoute(builder: (_) => const MorePage());
+
       case RouteNames.landing:
         return MaterialPageRoute(
             builder: (_) => const Landing()); // your original Landing
