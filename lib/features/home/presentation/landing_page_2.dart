@@ -1,7 +1,9 @@
 import 'dart:async';
+import 'package:amar_shoday/core/constants/colors.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
 import 'package:amar_shoday/features/search_results/presentation/search_results_page.dart';
 import 'package:amar_shoday/widgets/bottom_navbar.dart';
+import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -178,7 +180,7 @@ class _LandingPage2State extends State<LandingPage2>
                 children: [
                   const SizedBox(height: 25),
                   Container(
-                    color: Colors.indigo.shade900,
+                    color: AppColors.primaryColor,
                     padding:
                         const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
                     child: Row(
@@ -212,7 +214,7 @@ class _LandingPage2State extends State<LandingPage2>
                       Container(
                         height: 120,
                         decoration: BoxDecoration(
-                          color: Colors.indigo.shade900,
+                          color: AppColors.primaryColor,
                           borderRadius: const BorderRadius.vertical(
                               bottom: Radius.circular(24)),
                         ),
@@ -254,68 +256,14 @@ class _LandingPage2State extends State<LandingPage2>
             ),
           ),
           body: _buildBody(),
-          // bottomNavigationBar: ClipRRect(
-          //   borderRadius: const BorderRadius.only(
-          //       topLeft: Radius.circular(24), topRight: Radius.circular(24)),
-          //   child: BottomNavigationBar(
-          //     backgroundColor: Colors.indigo.shade900,
-          //     currentIndex: _navIndex,
-          //     onTap: (i) => setState(() => _navIndex = i),
-          //     type: BottomNavigationBarType.fixed,
-          //     selectedItemColor: Colors.green,
-          //     unselectedItemColor: Colors.white,
-          //     items: [
-          //       BottomNavigationBarItem(
-          //           icon: const Icon(Icons.home), label: "home".tr()),
-          //       BottomNavigationBarItem(
-          //           icon: const Icon(Icons.category), label: "categories".tr()),
-          //       BottomNavigationBarItem(
-          //           icon: const Icon(Icons.favorite_border),
-          //           label: "favourite".tr()),
-          //       BottomNavigationBarItem(
-          //           icon: const Icon(Icons.more_horiz), label: "more".tr()),
-          //     ],
-          //   ),
-          // ),
-          bottomNavigationBar: ClipRRect(
-            borderRadius: const BorderRadius.only(
-              topLeft: Radius.circular(24),
-              topRight: Radius.circular(24),
-            ),
-            child: CustomBottomNavBar(
-              currentIndex: _navIndex,
-              onTap: (index) {
-                setState(() => _navIndex = index);
-              },
-            ),
-          ),
-        ),
-
-        // 🛒 Floating draggable cart
-        Positioned(
-          left: cartPosition.dx,
-          top: cartPosition.dy,
-          child: Draggable(
-            feedback: _floatingCart(),
-            childWhenDragging: const SizedBox.shrink(),
-            onDragEnd: (details) {
-              double dx = details.offset.dx.clamp(0.0, screenSize.width - 60);
-              double dy = details.offset.dy.clamp(
-                  0.0, screenSize.height - 60 - kBottomNavigationBarHeight);
-
-              _cartAnimation = Tween<Offset>(
-                begin: cartPosition,
-                end: Offset(dx, dy),
-              ).animate(CurvedAnimation(
-                parent: _cartAnimationController,
-                curve: Curves.elasticOut,
-              ));
-
-              _cartAnimationController.forward(from: 0);
+          bottomNavigationBar: CustomBottomNavBar(
+            currentIndex: _navIndex,
+            onTap: (index) {
+              setState(() => _navIndex = index);
             },
-            child: _floatingCart(),
           ),
         ),
+        const FloatingCart(),
       ],
     );
   }
@@ -407,7 +355,7 @@ class _LandingPage2State extends State<LandingPage2>
                         const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
                     margin: const EdgeInsets.only(right: 8),
                     decoration: BoxDecoration(
-                      color: Colors.green,
+                      color: AppColors.secondaryColor,
                       borderRadius: BorderRadius.circular(6),
                     ),
                     child: Row(
@@ -417,7 +365,10 @@ class _LandingPage2State extends State<LandingPage2>
                         const SizedBox(width: 4),
                         Text(
                           'search'.tr(),
-                          style: const TextStyle(color: Colors.white),
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                              fontSize: 15),
                         ),
                       ],
                     ),
@@ -473,7 +424,7 @@ class _LandingPage2State extends State<LandingPage2>
         Container(
           height: 90,
           decoration: BoxDecoration(
-            color: Colors.indigo.shade900,
+            color: AppColors.primaryColor,
             borderRadius: const BorderRadius.only(
               bottomLeft: Radius.circular(24),
               bottomRight: Radius.circular(24),

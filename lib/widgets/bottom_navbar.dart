@@ -1,3 +1,4 @@
+import 'package:amar_shoday/core/constants/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
 
@@ -13,37 +14,75 @@ class CustomBottomNavBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BottomNavigationBar(
-      currentIndex: currentIndex,
-      onTap: (index) {
-        onTap(index);
+    return ClipRRect(
+      borderRadius: const BorderRadius.only(
+        topLeft: Radius.circular(24),
+        topRight: Radius.circular(24),
+      ),
+      child: BottomNavigationBar(
+        currentIndex: currentIndex,
+        onTap: (index) {
+          onTap(index);
 
-        // Optional centralized navigation handling:
-        switch (index) {
-          case 0:
-            Navigator.pushNamed(context, RouteNames.landing2);
-            break;
-          case 1:
-            Navigator.pushNamed(context, RouteNames.catogories);
-            break;
-          case 2:
-            Navigator.pushNamed(context, RouteNames.favourites);
-            break;
-          case 3:
-            Navigator.pushNamed(context, RouteNames.more);
-            break;
-        }
-      },
-      type: BottomNavigationBarType.fixed,
-      selectedItemColor: Colors.indigo.shade900,
-      unselectedItemColor: Colors.grey,
-      items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-        BottomNavigationBarItem(
-            icon: Icon(Icons.category), label: 'Categories'),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-        BottomNavigationBarItem(icon: Icon(Icons.person), label: 'More'),
-      ],
+          // Centralized navigation
+          switch (index) {
+            case 0:
+              Navigator.pushNamed(context, RouteNames.landing2);
+              break;
+            case 1:
+              Navigator.pushNamed(context, RouteNames.catogories);
+              break;
+            case 2:
+              Navigator.pushNamed(context, RouteNames.favourites);
+              break;
+            case 3:
+              Navigator.pushNamed(context, RouteNames.more);
+              break;
+          }
+        },
+        backgroundColor: AppColors.primaryColor, // Navbar background color
+        selectedItemColor: Colors.green, // Selected icon & label
+        unselectedItemColor: Colors.grey, // Unselected icon & label
+        type: BottomNavigationBarType.fixed,
+        items: [
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/home_icon.png',
+              width: 24,
+              height: 24,
+              color: currentIndex == 0 ? Colors.green : Colors.grey,
+            ),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/categories_icon.png',
+              width: 24,
+              height: 24,
+              color: currentIndex == 1 ? Colors.green : Colors.grey,
+            ),
+            label: 'Categories',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/Favorite.png',
+              width: 24,
+              height: 24,
+              color: currentIndex == 2 ? Colors.green : Colors.grey,
+            ),
+            label: 'Cart',
+          ),
+          BottomNavigationBarItem(
+            icon: Image.asset(
+              'assets/more.png',
+              width: 24,
+              height: 24,
+              color: currentIndex == 3 ? Colors.green : Colors.grey,
+            ),
+            label: 'More',
+          ),
+        ],
+      ),
     );
   }
 }
