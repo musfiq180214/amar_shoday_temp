@@ -1,4 +1,5 @@
 import 'package:amar_shoday/core/constants/colors.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
 
@@ -52,7 +53,7 @@ class CustomBottomNavBar extends StatelessWidget {
               height: 24,
               color: currentIndex == 0 ? Colors.green : Colors.grey,
             ),
-            label: 'Home',
+            label: 'home'.tr(),
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
@@ -61,7 +62,7 @@ class CustomBottomNavBar extends StatelessWidget {
               height: 24,
               color: currentIndex == 1 ? Colors.green : Colors.grey,
             ),
-            label: 'Categories',
+            label: 'categories'.tr(),
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
@@ -70,7 +71,7 @@ class CustomBottomNavBar extends StatelessWidget {
               height: 24,
               color: currentIndex == 2 ? Colors.green : Colors.grey,
             ),
-            label: 'Cart',
+            label: 'favourite'.tr(),
           ),
           BottomNavigationBarItem(
             icon: Image.asset(
@@ -79,7 +80,7 @@ class CustomBottomNavBar extends StatelessWidget {
               height: 24,
               color: currentIndex == 3 ? Colors.green : Colors.grey,
             ),
-            label: 'More',
+            label: 'more'.tr(),
           ),
         ],
       ),

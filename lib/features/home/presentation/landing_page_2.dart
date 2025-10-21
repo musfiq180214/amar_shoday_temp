@@ -1,9 +1,10 @@
 import 'dart:async';
 import 'package:amar_shoday/core/constants/colors.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
+import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
 import 'package:amar_shoday/features/search_results/presentation/search_results_page.dart';
 import 'package:amar_shoday/widgets/bottom_navbar.dart';
-import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
+// import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -268,22 +269,6 @@ class _LandingPage2State extends State<LandingPage2>
     );
   }
 
-  Widget _floatingCart() {
-    return GestureDetector(
-      onTap: () {
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(content: Text("Cart tapped!")),
-        );
-      },
-      child: Image.asset(
-        "assets/empty.png",
-        width: 60,
-        height: 60,
-        fit: BoxFit.contain,
-      ),
-    );
-  }
-
   Widget _buildBody() {
     return SingleChildScrollView(
       child: Column(
@@ -304,7 +289,7 @@ class _LandingPage2State extends State<LandingPage2>
           _sectionWithHorizontalItems("grocery_items".tr(), grocery,
               itemImages: groceryImages,
               bordered: true,
-              routeName: RouteNames.reccProducts),
+              routeName: RouteNames.GroceryScreen),
           const SizedBox(height: 12),
           _buildAds(),
           _buildSectionTitle("top_sales".tr()),

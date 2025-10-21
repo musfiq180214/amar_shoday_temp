@@ -1,8 +1,17 @@
+import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
+import 'package:amar_shoday/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class ReccProductsScreen extends StatelessWidget {
+class ReccProductsScreen extends StatefulWidget {
   const ReccProductsScreen({super.key});
+
+  @override
+  State<ReccProductsScreen> createState() => _ReccProductsScreenState();
+}
+
+class _ReccProductsScreenState extends State<ReccProductsScreen> {
+  int _currentIndex = 0;
 
   final List<String> products = const [
     "Marium Date",
@@ -51,242 +60,244 @@ class ReccProductsScreen extends StatelessWidget {
           i, i + 3 > products.length ? products.length : i + 3));
     }
 
-    return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-      appBar: PreferredSize(
-        preferredSize: const Size.fromHeight(130),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              const SizedBox(height: 25),
-              Container(
-                color: Colors.indigo.shade900,
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Stack(children: [
+      Scaffold(
+        backgroundColor: Colors.grey.shade100,
+        appBar: PreferredSize(
+          preferredSize: const Size.fromHeight(130),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                const SizedBox(height: 25),
+                Container(
+                  color: Colors.indigo.shade900,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          Image.asset(
+                            "assets/location_icon.png",
+                            width: 20,
+                            height: 20,
+                          ),
+                          const SizedBox(width: 4),
+                          const Text(
+                            "Bosila, Dhaka",
+                            style: TextStyle(color: Colors.white, fontSize: 14),
+                          ),
+                        ],
+                      ),
+                      IconButton(
+                        onPressed: () {
+                          if (context.locale.languageCode == 'en') {
+                            context.setLocale(const Locale('bn', 'BD'));
+                          } else {
+                            context.setLocale(const Locale('en', 'US'));
+                          }
+                        },
+                        icon: const Icon(Icons.language, color: Colors.white),
+                      ),
+                    ],
+                  ),
+                ),
+                Stack(
                   children: [
-                    Row(
-                      children: [
-                        Image.asset(
-                          "assets/location_icon.png",
-                          width: 20,
-                          height: 20,
-                        ),
-                        const SizedBox(width: 4),
-                        const Text(
-                          "Bosila, Dhaka",
-                          style: TextStyle(color: Colors.white, fontSize: 14),
-                        ),
-                      ],
+                    Container(
+                      height: 90,
+                      decoration: const BoxDecoration(
+                        color: Colors.white,
+                        borderRadius:
+                            BorderRadius.vertical(bottom: Radius.circular(24)),
+                      ),
                     ),
-                    IconButton(
-                      onPressed: () {
-                        if (context.locale.languageCode == 'en') {
-                          context.setLocale(const Locale('bn', 'BD'));
-                        } else {
-                          context.setLocale(const Locale('en', 'US'));
-                        }
-                      },
-                      icon: const Icon(Icons.language, color: Colors.white),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 16, vertical: 10),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          IconButton(
+                            icon: const Icon(Icons.arrow_back,
+                                color: Colors.grey),
+                            onPressed: () => Navigator.pop(context),
+                          ),
+                          Text(
+                            'recommended_products'.tr(),
+                            style: TextStyle(
+                              color: Colors.indigo.shade900,
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          Container(
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                            ),
+                            padding: const EdgeInsets.all(2),
+                            child: IconButton(
+                              icon: Image.asset(
+                                'assets/bell_icon.png',
+                                width: 30,
+                                height: 30,
+                              ),
+                              onPressed: () {},
+                              iconSize: 20,
+                              padding: EdgeInsets.zero,
+                              constraints: const BoxConstraints(),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   ],
                 ),
-              ),
-              Stack(
-                children: [
-                  Container(
-                    height: 90,
-                    decoration: const BoxDecoration(
-                      color: Colors.white,
-                      borderRadius:
-                          BorderRadius.vertical(bottom: Radius.circular(24)),
-                    ),
-                  ),
-                  Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 10),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        IconButton(
-                          icon:
-                              const Icon(Icons.arrow_back, color: Colors.grey),
-                          onPressed: () => Navigator.pop(context),
-                        ),
-                        Text(
-                          'recommended_products'.tr(),
-                          style: TextStyle(
-                            color: Colors.indigo.shade900,
-                            fontSize: 16,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Container(
-                          decoration: const BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: Colors.white,
-                          ),
-                          padding: const EdgeInsets.all(2),
-                          child: IconButton(
-                            icon: Image.asset(
-                              'assets/bell_icon.png',
-                              width: 30,
-                              height: 30,
-                            ),
-                            onPressed: () {},
-                            iconSize: 20,
-                            padding: EdgeInsets.zero,
-                            constraints: const BoxConstraints(),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        ),
-      ),
-      body: Stack(
-        children: [
-          // Scrollable content
-          SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const SizedBox(height: 12),
-
-                // 📦 Product grid
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  child: Column(
-                    children: productRows.map((row) {
-                      return Row(
-                        children: List.generate(3, (index) {
-                          final product =
-                              index < row.length ? row[index] : null;
-                          if (product == null) {
-                            return const Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.all(6.0),
-                                child: SizedBox(
-                                  height: 140,
-                                  width: double.infinity,
-                                ),
-                              ),
-                            );
-                          }
-                          final imgPath = productImages[product];
-                          return Expanded(
-                            child: Padding(
-                              padding: const EdgeInsets.all(6.0),
-                              child: Stack(
-                                children: [
-                                  SizedBox(
-                                    height: 140,
-                                    width: double.infinity,
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        border: Border.all(
-                                            color: Colors.grey.shade400),
-                                        borderRadius: BorderRadius.circular(8),
-                                      ),
-                                      child: Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          const SizedBox(height: 20),
-                                          SizedBox(
-                                            height: 80,
-                                            width: 80,
-                                            child: imgPath != null
-                                                ? FittedBox(
-                                                    fit: BoxFit.contain,
-                                                    child: Image.asset(imgPath),
-                                                  )
-                                                : FittedBox(
-                                                    fit: BoxFit.contain,
-                                                    child: Text(
-                                                      product[0],
-                                                      style: const TextStyle(
-                                                          fontSize: 16),
-                                                    ),
-                                                  ),
-                                          ),
-                                          const SizedBox(height: 6),
-                                          SizedBox(
-                                            height: 20,
-                                            child: FittedBox(
-                                              fit: BoxFit.scaleDown,
-                                              child: Text(
-                                                product,
-                                                textAlign: TextAlign.center,
-                                                maxLines: 2,
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                  if (product == "Marium Date")
-                                    Positioned(
-                                      top: 0,
-                                      left: 0,
-                                      child: _buildDiscount("35% Off"),
-                                    ),
-                                  if (product == "Golden Apple")
-                                    Positioned(
-                                      top: 0,
-                                      left: 0,
-                                      child: _buildDiscount("15% Off"),
-                                    ),
-                                  if (product == "Aci Pure Chilli")
-                                    Positioned(
-                                      top: 0,
-                                      left: 0,
-                                      child: _buildDiscount("10% Off"),
-                                    ),
-                                  Positioned(
-                                    top: 4,
-                                    right: 4,
-                                    child: Container(
-                                      decoration: const BoxDecoration(
-                                        shape: BoxShape.circle,
-                                        color: Colors.white,
-                                      ),
-                                      padding: const EdgeInsets.all(4),
-                                      child: const Icon(Icons.favorite_border,
-                                          color: Colors.green, size: 16),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          );
-                        }),
-                      );
-                    }).toList(),
-                  ),
-                ),
-
-                const SizedBox(height: 80),
               ],
             ),
           ),
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-              margin: const EdgeInsets.only(left: 0),
-              child: Image.asset("assets/empty.png", width: 60, height: 60),
+        ),
+        body: Stack(
+          children: [
+            SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  const SizedBox(height: 12),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 12),
+                    child: Column(
+                      children: productRows.map((row) {
+                        return Row(
+                          children: List.generate(3, (index) {
+                            final product =
+                                index < row.length ? row[index] : null;
+                            if (product == null) {
+                              return const Expanded(
+                                child: Padding(
+                                  padding: EdgeInsets.all(6.0),
+                                  child: SizedBox(
+                                    height: 140,
+                                    width: double.infinity,
+                                  ),
+                                ),
+                              );
+                            }
+                            final imgPath = productImages[product];
+                            return Expanded(
+                              child: Padding(
+                                padding: const EdgeInsets.all(6.0),
+                                child: Stack(
+                                  children: [
+                                    SizedBox(
+                                      height: 140,
+                                      width: double.infinity,
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                          color: Colors.white,
+                                          border: Border.all(
+                                              color: Colors.grey.shade400),
+                                          borderRadius:
+                                              BorderRadius.circular(8),
+                                        ),
+                                        child: Column(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            const SizedBox(height: 20),
+                                            SizedBox(
+                                              height: 80,
+                                              width: 80,
+                                              child: imgPath != null
+                                                  ? FittedBox(
+                                                      fit: BoxFit.contain,
+                                                      child:
+                                                          Image.asset(imgPath),
+                                                    )
+                                                  : FittedBox(
+                                                      fit: BoxFit.contain,
+                                                      child: Text(
+                                                        product[0],
+                                                        style: const TextStyle(
+                                                            fontSize: 16),
+                                                      ),
+                                                    ),
+                                            ),
+                                            const SizedBox(height: 6),
+                                            SizedBox(
+                                              height: 20,
+                                              child: FittedBox(
+                                                fit: BoxFit.scaleDown,
+                                                child: Text(
+                                                  product,
+                                                  textAlign: TextAlign.center,
+                                                  maxLines: 2,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    if (product == "Marium Date")
+                                      Positioned(
+                                        top: 0,
+                                        left: 0,
+                                        child: _buildDiscount("35% Off"),
+                                      ),
+                                    if (product == "Golden Apple")
+                                      Positioned(
+                                        top: 0,
+                                        left: 0,
+                                        child: _buildDiscount("15% Off"),
+                                      ),
+                                    if (product == "Aci Pure Chilli")
+                                      Positioned(
+                                        top: 0,
+                                        left: 0,
+                                        child: _buildDiscount("10% Off"),
+                                      ),
+                                    Positioned(
+                                      top: 4,
+                                      right: 4,
+                                      child: Container(
+                                        decoration: const BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: Colors.white,
+                                        ),
+                                        padding: const EdgeInsets.all(4),
+                                        child: const Icon(Icons.favorite_border,
+                                            color: Colors.green, size: 16),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            );
+                          }),
+                        );
+                      }).toList(),
+                    ),
+                  ),
+                  const SizedBox(height: 80),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
+        bottomNavigationBar: CustomBottomNavBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            if (index != _currentIndex) {
+              setState(() => _currentIndex = index);
+            }
+          },
+        ),
       ),
-    );
+      const FloatingCart(),
+    ]);
   }
 
   Widget _buildDiscount(String text) {

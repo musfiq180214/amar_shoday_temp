@@ -11,4 +11,5 @@ class RouteNames {
   static const String githubRepos = '/github-repos';
   static const String searchResults = '/search-results';
   static const String reccProducts = '/recc-products';
+  static const String GroceryScreen = '/grocery';
 }

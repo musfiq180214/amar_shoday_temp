@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 
 class FloatingCart extends StatefulWidget {
   final void Function()? onTap;
-
   const FloatingCart({super.key, this.onTap});
 
   @override
@@ -15,28 +14,51 @@ class _FloatingCartState extends State<FloatingCart>
     with SingleTickerProviderStateMixin {
   final CartController _controller = CartController();
 
-  late AnimationController _cartAnimationController;
-  late Animation<Offset> _cartAnimation;
+  late AnimationController _animationController;
+  late Animation<Offset> _animation;
 
   @override
   void initState() {
     super.initState();
 
-    _cartAnimationController = AnimationController(
+    _animationController = AnimationController(
       vsync: this,
       duration: const Duration(milliseconds: 400),
     );
 
-    _cartAnimationController.addListener(() {
-      _controller.cartPosition = _cartAnimation.value;
-      setState(() {});
+    // Only one listener for the animation controller
+    _animationController.addListener(() {
+      if (mounted) {
+        // ✅ Check if widget is still in the tree
+        _controller.updatePosition(_animation.value);
+      }
+    });
+
+    // Listen to controller changes
+    _controller.addListener(() {
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 
   @override
   void dispose() {
-    _cartAnimationController.dispose();
+    _animationController.dispose();
+    _controller.removeListener(() {}); // optional: remove listener
     super.dispose();
+  }
+
+  Widget _buildCart() {
+    return GestureDetector(
+      onTap: widget.onTap ?? () {},
+      child: Image.asset(
+        "assets/empty.png",
+        width: 60,
+        height: 60,
+        fit: BoxFit.contain,
+      ),
+    );
   }
 
   @override
@@ -55,37 +77,17 @@ class _FloatingCartState extends State<FloatingCart>
           double dy = details.offset.dy
               .clamp(0.0, screenSize.height - 60 - kBottomNavigationBarHeight);
 
-          _cartAnimation = Tween<Offset>(
+          _animation = Tween<Offset>(
             begin: _controller.cartPosition,
             end: Offset(dx, dy),
-          ).animate(
-            CurvedAnimation(
-              parent: _cartAnimationController,
-              curve: Curves.elasticOut,
-            ),
-          );
+          ).animate(CurvedAnimation(
+            parent: _animationController,
+            curve: Curves.elasticOut,
+          ));
 
-          _cartAnimationController.forward(from: 0);
+          _animationController.forward(from: 0); // ✅ No new listener here
         },
         child: _buildCart(),
-      ),
-    );
-  }
-
-  // 🔹 Make sure this method exists inside the class
-  Widget _buildCart() {
-    return GestureDetector(
-      onTap: widget.onTap ??
-          () {
-            ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text("Cart tapped!")),
-            );
-          },
-      child: Image.asset(
-        "assets/empty.png",
-        width: 60,
-        height: 60,
-        fit: BoxFit.contain,
       ),
     );
   }

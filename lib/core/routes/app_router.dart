@@ -1,5 +1,6 @@
 import 'package:amar_shoday/features/categories/presentation/categories_page.dart';
 import 'package:amar_shoday/features/favourites/presentation/favourites_page.dart';
+import 'package:amar_shoday/features/grocery/presentation/grocery_screen.dart';
 import 'package:amar_shoday/features/home/presentation/landing_page_2.dart';
 import 'package:amar_shoday/features/more/presentation/more_page.dart';
 import 'package:amar_shoday/features/onboarding/presentation/language_page.dart';
@@ -42,7 +43,8 @@ class AppRouter {
         );
       case RouteNames.reccProducts:
         return MaterialPageRoute(builder: (_) => const ReccProductsScreen());
-
+      case RouteNames.GroceryScreen:
+        return MaterialPageRoute(builder: (_) => const GroceryScreen());
       default:
         return MaterialPageRoute(
           builder: (_) => Scaffold(
