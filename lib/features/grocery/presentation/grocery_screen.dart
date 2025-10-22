@@ -1,4 +1,6 @@
+import 'package:amar_shoday/widgets/bell_icon.dart';
 import 'package:amar_shoday/widgets/bottom_navbar.dart';
+import 'package:amar_shoday/widgets/top_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
@@ -47,7 +49,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
           children: [
             CircleAvatar(
               radius: 40,
-              backgroundColor: Colors.amber[700],
+              backgroundColor: Colors.yellow[100],
               child: ClipOval(
                 child: imgPath != null
                     ? Image.asset(
@@ -73,20 +75,22 @@ class _GroceryScreenState extends State<GroceryScreen> {
     );
   }
 
-  Widget _buildCategoriesSection() {
+  Widget _buildSubCategoriesSection() {
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
           child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            // mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("categories".tr(),
+              const SizedBox(width: 1),
+              Text("sub_categories".tr(),
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 18)),
+                      fontWeight: FontWeight.normal, fontSize: 22)),
             ],
           ),
         ),
+        const SizedBox(height: 5),
         _buildCategories(),
       ],
     );
@@ -125,7 +129,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const SizedBox(height: 16),
-          _buildCategoriesSection(),
+          _buildSubCategoriesSection(),
           const SizedBox(height: 16),
           Stack(
             children: [
@@ -133,6 +137,14 @@ class _GroceryScreenState extends State<GroceryScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
+                    Row(
+                      children: [
+                        const SizedBox(width: 16),
+                        Text("items".tr(),
+                            style: const TextStyle(
+                                fontWeight: FontWeight.normal, fontSize: 22)),
+                      ],
+                    ),
                     const SizedBox(height: 12),
                     Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -251,10 +263,74 @@ class _GroceryScreenState extends State<GroceryScreen> {
       children: [
         Scaffold(
           backgroundColor: Colors.grey.shade100,
-          appBar: AppBar(
-            backgroundColor: Colors.indigo.shade900,
-            title: const Text("Grocery Items"),
-            centerTitle: true,
+          appBar: PreferredSize(
+            preferredSize: const Size.fromHeight(130),
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const SizedBox(height: 25),
+                  const TopBar(),
+                  Stack(
+                    children: [
+                      // Background container with rounded bottom corners
+                      Container(
+                        height: 90,
+                        decoration: const BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.vertical(
+                              bottom: Radius.circular(24)),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black12,
+                              blurRadius: 4,
+                              offset: Offset(0, 2),
+                            ),
+                          ],
+                        ),
+                      ),
+                      // Foreground Row with back, title, and bell icon
+                      Positioned.fill(
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              // Back button
+                              IconButton(
+                                icon: const Icon(Icons.arrow_back,
+                                    color: Colors.grey),
+                                onPressed: () => Navigator.pop(context),
+                                splashRadius: 24,
+                              ),
+
+                              // Title
+                              Expanded(
+                                child: Center(
+                                  child: Text(
+                                    'grocery_items'.tr(),
+                                    style: TextStyle(
+                                      color: Colors.indigo.shade900,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                ),
+                              ),
+
+                              const BellIconButton(),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+            ),
           ),
           body: _buildBody(),
           bottomNavigationBar: CustomBottomNavBar(

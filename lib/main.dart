@@ -2,13 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'core/routes/app_router.dart';
+import 'core/routes/route_names.dart';
 import 'features/theme/theme_provider.dart';
 import 'core/logger/app_logger.dart';
+import 'core/logger/app_route_observer.dart';
+
+final AppRouteObserver _routeObserver = AppRouteObserver();
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await EasyLocalization.ensureInitialized();
+
   AppLogger.init(isProduction: false);
+  final logger = AppLogger.getLogger('AppInit');
+  logger.i('🚀 Amar Shoday App started');
 
   runApp(
     EasyLocalization(
@@ -32,11 +39,12 @@ class MyApp extends ConsumerWidget {
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
       themeMode: themeMode,
-      locale: context.locale, // EasyLocalization handles locale
+      locale: context.locale,
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
       onGenerateRoute: AppRouter.generateRoute,
-      initialRoute: '/',
+      initialRoute: RouteNames.splash,
+      navigatorObservers: [_routeObserver],
     );
   }
 }

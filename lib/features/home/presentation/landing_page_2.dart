@@ -2,8 +2,9 @@ import 'dart:async';
 import 'package:amar_shoday/core/constants/colors.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
 import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
-import 'package:amar_shoday/features/search_results/presentation/search_results_page.dart';
+import 'package:amar_shoday/widgets/bell_icon.dart';
 import 'package:amar_shoday/widgets/bottom_navbar.dart';
+import 'package:amar_shoday/widgets/top_bar.dart';
 // import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -34,16 +35,32 @@ class _LandingPage2State extends State<LandingPage2>
     "Medicine"
   ];
   final recommended = const [
-    "Soyabin Oil",
-    "Rice",
-    "Local Onion",
-    "Milk Powder"
+    "Marium Date",
+    "Haleem Mix",
+    "Golden Apple",
+    "Banana (Sagor)",
+    "Orange (Big)",
+    "Papaya Ripe",
+    "Pomagranate",
+    "Water Melon",
+    "Pineapple",
+    "Aarong Ghee",
+    "Soyabean Oil",
+    "Aci Pure Chilli",
+    "Dabur Honey",
+    "Diploma Milk",
+    "Nescafe Classic",
+    "Lux Body Wash"
   ];
   final grocery = const [
-    "Chola Boot",
-    "Rice",
-    "Haleem Mix",
-    "Maggie",
+    "Soyabin Oil",
+    "Sunflower Oil",
+    "Rice Bran Oil",
+    "Olive Oil",
+    "Mustard Oil",
+    "Edible Oil",
+    "Canola Oil",
+    "Coconut Oil"
   ];
   final topSales = const [
     "Aarong Milk",
@@ -62,16 +79,34 @@ class _LandingPage2State extends State<LandingPage2>
   };
 
   final Map<String, String> recommendedImages = const {
-    "Soyabin Oil": "assets/soyabin_oil.png",
-    "Rice": "assets/rice.png",
-    "Local Onion": "assets/local_onion.png",
+    "Marium Date": "assets/Marium_Date.png",
+    "Haleem Mix": "assets/haleem_mix.png",
+    "Golden Apple": "assets/golden_apple.png",
+    "Banana (Sagor)": "assets/Banana (Sagor).png",
+    "Orange (Big)": "assets/Orange (Big).png",
+    "Papaya Ripe": "assets/Papaya Ripe.png",
+    "Pomagranate": "assets/Pomagranate.png",
+    "Water Melon": "assets/Water_Melon.png",
+    "Pineapple": "assets/PineApple.png",
+    "Aarong Ghee": "assets/aarong_ghee.png",
+    "Soyabean Oil": "assets/soyabin_oil.png",
+    "Aci Pure Chilli": "assets/aci_pure_chili.png",
+    "Dabur Honey": "assets/Dubor_Honey.png",
+    "Diploma Milk": "assets/Diploma_Milk.png",
+    "Nescafe Classic": "assets/Nescafe_Classic.png",
+    "Lifebuoy Handwash": "assets/Lifebuoy_HandWash.png",
+    "Lux Body Wash": "assets/lux_body_wash.png"
   };
 
   final Map<String, String> groceryImages = const {
-    "Chola Boot": "assets/chola_boot.png",
-    "Rice": "assets/rice.png",
-    "Haleem Mix": "assets/radhuni_halim_mix.png",
-    "Maggie": "assets/maggie.png",
+    "Soyabin Oil": "assets/soyabin_oil.png",
+    "Sunflower Oil": "assets/sunflower_oil.png",
+    "Rice Bran Oil": "assets/rice_bran_oil.png",
+    "Olive Oil": "assets/olive_oil.png",
+    "Mustard Oil": "assets/mustard_oil.png",
+    "Edible Oil": "assets/edible_oil.png",
+    "Canola Oil": "assets/canola_oil.png",
+    "Coconut Oil": "assets/coconut_oil.png"
   };
 
   final Map<String, String> topSaleImages = const {
@@ -157,11 +192,10 @@ class _LandingPage2State extends State<LandingPage2>
   void _navigateToSearchResults() {
     String query = _searchController.text.trim();
     if (query.isNotEmpty) {
-      Navigator.push(
+      Navigator.pushNamed(
         context,
-        MaterialPageRoute(
-          builder: (_) => SearchResultsPage(searchQuery: query),
-        ),
+        RouteNames.searchResults,
+        arguments: {'query': query},
       );
     }
   }
@@ -173,43 +207,14 @@ class _LandingPage2State extends State<LandingPage2>
     return Stack(
       children: [
         Scaffold(
-          backgroundColor: Colors.grey[100],
+          backgroundColor: AppColors.bgColor,
           appBar: PreferredSize(
             preferredSize: const Size.fromHeight(110),
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   const SizedBox(height: 25),
-                  Container(
-                    color: AppColors.primaryColor,
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset("assets/location_icon.png",
-                                width: 20, height: 20),
-                            const SizedBox(width: 4),
-                            const Text("Bosila, Dhaka",
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 14)),
-                          ],
-                        ),
-                        IconButton(
-                          onPressed: () {
-                            if (context.locale.languageCode == 'en') {
-                              context.setLocale(const Locale('bn', 'BD'));
-                            } else {
-                              context.setLocale(const Locale('en', 'US'));
-                            }
-                          },
-                          icon: const Icon(Icons.language, color: Colors.white),
-                        )
-                      ],
-                    ),
-                  ),
+                  const TopBar(),
                   Stack(
                     children: [
                       Container(
@@ -231,21 +236,10 @@ class _LandingPage2State extends State<LandingPage2>
                               style: const TextStyle(
                                   color: Colors.white, fontSize: 14),
                             ),
-                            Container(
-                              width: 40,
-                              height: 40,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white,
-                              ),
-                              child: IconButton(
-                                icon: Image.asset('assets/bell_icon.png',
-                                    width: 40, height: 40),
-                                onPressed: () {},
-                                iconSize: 15,
-                                padding: EdgeInsets.zero,
-                                constraints: const BoxConstraints(),
-                              ),
+                            BellIconButton(
+                              onPressed: () {
+                                // your action here
+                              },
                             ),
                           ],
                         ),
@@ -308,7 +302,7 @@ class _LandingPage2State extends State<LandingPage2>
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Container(
             decoration: BoxDecoration(
-              color: Colors.white,
+              color: AppColors.bgColor,
               borderRadius: BorderRadius.circular(8),
               boxShadow: const [
                 BoxShadow(
@@ -421,7 +415,7 @@ class _LandingPage2State extends State<LandingPage2>
           children: [
             _buildSectionTitle(
               "promotion".tr(),
-              textColor: Colors.white,
+              textColor: AppColors.bgColor,
               fontSize: 20,
             ),
             SizedBox(
@@ -498,7 +492,7 @@ class _LandingPage2State extends State<LandingPage2>
 
   Widget _buildTopSales() {
     return Container(
-      color: Colors.white,
+      color: AppColors.bgColor,
       height: 140,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
@@ -653,7 +647,7 @@ class _LandingPage2State extends State<LandingPage2>
                 },
         ),
         Container(
-          color: Colors.white,
+          color: AppColors.bgColor,
           height: 140, // increased height to accommodate bigger images
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
@@ -663,36 +657,51 @@ class _LandingPage2State extends State<LandingPage2>
             itemBuilder: (context, index) {
               final item = items[index];
               final imgPath = itemImages?[item];
-              return Container(
-                width: 100,
-                decoration: bordered
-                    ? BoxDecoration(
-                        border: Border.all(color: Colors.grey.shade400),
-                      )
-                    : null,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    if (imgPath != null)
-                      Image.asset(
-                        imgPath,
-                        width: 60,
-                        height: 60,
-                        fit: BoxFit.contain,
-                      )
-                    else
-                      Text(item.toString().substring(0, 1),
-                          style: const TextStyle(fontSize: 16)),
-                    const SizedBox(height: 8),
-                    Text(
-                      item.toString(),
-                      textAlign: TextAlign.center,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                    ),
-                  ],
+              return Stack(children: [
+                Container(
+                  width: 100,
+                  decoration: bordered
+                      ? BoxDecoration(
+                          border: Border.all(color: Colors.grey.shade400),
+                        )
+                      : null,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      if (imgPath != null)
+                        Image.asset(
+                          imgPath,
+                          width: 60,
+                          height: 60,
+                          fit: BoxFit.contain,
+                        )
+                      else
+                        Text(item.toString().substring(0, 1),
+                            style: const TextStyle(fontSize: 16)),
+                      const SizedBox(height: 8),
+                      Text(
+                        item.toString(),
+                        textAlign: TextAlign.center,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                    ],
+                  ),
                 ),
-              );
+                Positioned(
+                  top: 4,
+                  right: 4,
+                  child: Container(
+                    decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Colors.white,
+                    ),
+                    padding: const EdgeInsets.all(4),
+                    child: const Icon(Icons.favorite_border,
+                        color: Colors.green, size: 16),
+                  ),
+                ),
+              ]);
             },
           ),
         ),

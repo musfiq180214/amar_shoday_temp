@@ -1,52 +1,81 @@
-import 'package:amar_shoday/features/categories/presentation/categories_page.dart';
-import 'package:amar_shoday/features/favourites/presentation/favourites_page.dart';
-import 'package:amar_shoday/features/grocery/presentation/grocery_screen.dart';
-import 'package:amar_shoday/features/home/presentation/landing_page_2.dart';
-import 'package:amar_shoday/features/more/presentation/more_page.dart';
-import 'package:amar_shoday/features/onboarding/presentation/language_page.dart';
-import 'package:amar_shoday/features/onboarding/presentation/splash_page.dart';
-import 'package:amar_shoday/features/onboarding/presentation/suggest_area_page.dart';
-import 'package:amar_shoday/features/recommended_products/presentation/recc_product_page.dart';
-import 'package:amar_shoday/features/search_results/presentation/search_results_page.dart';
 import 'package:flutter/material.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
-
+import 'package:amar_shoday/features/onboarding/presentation/splash_page.dart';
+import 'package:amar_shoday/features/onboarding/presentation/language_page.dart';
+import 'package:amar_shoday/features/onboarding/presentation/suggest_area_page.dart';
 import 'package:amar_shoday/features/landing/presntation/landing.dart';
-// import 'package:amar_shoday/features/no_internet/presentation/no_internet.dart';
+import 'package:amar_shoday/features/home/presentation/landing_page_2.dart';
+import 'package:amar_shoday/features/categories/presentation/categories_page.dart';
+import 'package:amar_shoday/features/favourites/presentation/favourites_page.dart';
+import 'package:amar_shoday/features/more/presentation/more_page.dart';
+import 'package:amar_shoday/features/recommended_products/presentation/recc_product_page.dart';
+import 'package:amar_shoday/features/search_results/presentation/search_results_page.dart';
+import 'package:amar_shoday/features/grocery/presentation/grocery_screen.dart';
 
 class AppRouter {
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
+      case RouteNames.root:
       case RouteNames.splash:
-        return MaterialPageRoute(builder: (_) => const SplashPage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.splash),
+          builder: (_) => const SplashPage(),
+        );
       case RouteNames.language:
-        return MaterialPageRoute(builder: (_) => const LanguagePage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.language),
+          builder: (_) => const LanguagePage(),
+        );
       case RouteNames.suggestArea:
-        return MaterialPageRoute(builder: (_) => const SuggestAreaPage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.suggestArea),
+          builder: (_) => const SuggestAreaPage(),
+        );
       case RouteNames.landing2:
-        return MaterialPageRoute(builder: (_) => const LandingPage2());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.landing2),
+          builder: (_) => const LandingPage2(),
+        );
       case RouteNames.catogories:
-        return MaterialPageRoute(builder: (_) => const CategoriesPage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.catogories),
+          builder: (_) => const CategoriesPage(),
+        );
       case RouteNames.favourites:
-        return MaterialPageRoute(builder: (_) => const FavouritesPage());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.favourites),
+          builder: (_) => const FavouritesPage(),
+        );
       case RouteNames.more:
-        return MaterialPageRoute(builder: (_) => const MorePage());
-
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.more),
+          builder: (_) => const MorePage(),
+        );
       case RouteNames.landing:
         return MaterialPageRoute(
-            builder: (_) => const Landing()); // your original Landing
+          settings: const RouteSettings(name: RouteNames.landing),
+          builder: (_) => const Landing(),
+        );
       case RouteNames.searchResults:
         final args = settings.arguments as Map<String, dynamic>?;
         final query = args?['query'] as String? ?? '';
         return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.searchResults),
           builder: (_) => SearchResultsPage(searchQuery: query),
         );
       case RouteNames.reccProducts:
-        return MaterialPageRoute(builder: (_) => const ReccProductsScreen());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.reccProducts),
+          builder: (_) => const ReccProductsScreen(),
+        );
       case RouteNames.GroceryScreen:
-        return MaterialPageRoute(builder: (_) => const GroceryScreen());
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.GroceryScreen),
+          builder: (_) => const GroceryScreen(),
+        );
       default:
         return MaterialPageRoute(
+          settings: RouteSettings(name: 'Unknown-${settings.name}'),
           builder: (_) => Scaffold(
             body: Center(child: Text('No route defined for ${settings.name}')),
           ),

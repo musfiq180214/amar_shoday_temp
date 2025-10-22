@@ -1,4 +1,5 @@
 import 'package:amar_shoday/widgets/bottom_navbar.dart';
+import 'package:amar_shoday/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 
 class MorePage extends StatefulWidget {
@@ -14,12 +15,16 @@ class _MorePageState extends State<MorePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text("More"),
-        backgroundColor: Colors.indigo.shade900,
-        centerTitle: true,
-        automaticallyImplyLeading: false,
-      ),
+      appBar: const PreferredSize(
+          preferredSize: Size.fromHeight(110),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                SizedBox(height: 25),
+                TopBar(),
+              ],
+            ),
+          )),
       body: const Center(
         child: Text(
           "More options and settings will appear here.",

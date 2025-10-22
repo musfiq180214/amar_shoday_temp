@@ -9,8 +9,10 @@
     "top_sales": "Top Sales",
     "home": "Home",
     "categories": "Categories",
+    "sub_categories": "Sub Categories",
     "favourite": "Favourite",
     "more": "More",
     "search": "Search",
-    "search_result": "search result"
+    "search_result": "search result",
+    "items": "Items"
 }

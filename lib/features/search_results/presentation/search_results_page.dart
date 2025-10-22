@@ -1,4 +1,6 @@
 import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
+import 'package:amar_shoday/widgets/bell_icon.dart';
+import 'package:amar_shoday/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:amar_shoday/core/constants/colors.dart';
@@ -91,36 +93,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
             child: Column(
               children: [
                 const SizedBox(height: 25),
-                Container(
-                  color: AppColors.primaryColor,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset("assets/location_icon.png",
-                              width: 20, height: 20),
-                          const SizedBox(width: 4),
-                          const Text("Bosila, Dhaka",
-                              style:
-                                  TextStyle(color: Colors.white, fontSize: 14)),
-                        ],
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          if (context.locale.languageCode == 'en') {
-                            context.setLocale(const Locale('bn', 'BD'));
-                          } else {
-                            context.setLocale(const Locale('en', 'US'));
-                          }
-                        },
-                        icon: const Icon(Icons.language, color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
+                const TopBar(),
                 Stack(
                   children: [
                     Container(
@@ -149,20 +122,10 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                                 fontSize: 16,
                                 fontWeight: FontWeight.bold),
                           ),
-                          Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.all(2),
-                            child: IconButton(
-                              icon: Image.asset('assets/bell_icon.png',
-                                  width: 30, height: 30),
-                              onPressed: () {},
-                              iconSize: 20,
-                              padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints(),
-                            ),
+                          BellIconButton(
+                            onPressed: () {
+                              // your action here
+                            },
                           ),
                         ],
                       ),
@@ -255,7 +218,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                   crossAxisCount: 3,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
-                  childAspectRatio: 1, // square
+                  mainAxisExtent: 140, // square
                 ),
                 itemCount: products.length,
                 itemBuilder: (context, index) {
@@ -295,78 +258,93 @@ class _ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.white,
-            border: Border.all(color: Colors.grey.shade400),
-            borderRadius: BorderRadius.circular(8),
-          ),
-          child: Column(
-            children: [
-              Expanded(
-                flex: 6,
-                child: Padding(
-                  padding: const EdgeInsets.all(6.0),
+    return SizedBox(
+      width: double.infinity,
+      height: 130, // ✅ fixed height (equal for all)
+      child: Stack(
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              border: Border.all(color: Colors.grey.shade400),
+              borderRadius: BorderRadius.circular(8),
+            ),
+            padding: const EdgeInsets.all(6.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                // Image area (fixed)
+                SizedBox(
+                  height: 60,
+                  width: 60,
                   child: imgPath != null
                       ? Image.asset(
                           imgPath!,
                           fit: BoxFit.contain,
-                          cacheWidth: 120, // resize to reduce lag
-                          cacheHeight: 120,
                         )
-                      : Center(
-                          child: Text(product[0],
-                              style: const TextStyle(fontSize: 18)),
-                        ),
+                      : const Icon(Icons.image, size: 40, color: Colors.grey),
                 ),
-              ),
-              Expanded(
-                flex: 4,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: Text(
-                    product,
-                    textAlign: TextAlign.center,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(fontSize: 13),
+
+                const SizedBox(height: 6),
+
+                // Product name (will wrap & ellipsis inside fixed space)
+                SizedBox(
+                  height: 32, // ✅ fixed text area
+                  child: Center(
+                    child: Text(
+                      product,
+                      textAlign: TextAlign.center,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: const TextStyle(fontSize: 13),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // Discount badge
+          if (discount != null)
+            Positioned(
+              top: 4,
+              left: 4,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 2),
+                decoration: BoxDecoration(
+                  color: AppColors.primaryColor,
+                  borderRadius: BorderRadius.circular(6),
+                ),
+                child: Text(
+                  discount!,
+                  style: const TextStyle(
+                    color: Colors.white,
+                    fontSize: 11,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
-            ],
-          ),
-        ),
-        if (discount != null)
+            ),
+
+          // Favorite icon
           Positioned(
-            top: 0,
-            left: 0,
+            top: 4,
+            right: 4,
             child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              decoration: BoxDecoration(
-                color: AppColors.primaryColor,
-                borderRadius: BorderRadius.circular(8),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                color: Colors.white,
               ),
-              child: Text(discount!,
-                  style: const TextStyle(
-                      color: Colors.white,
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold)),
+              padding: const EdgeInsets.all(4),
+              child: const Icon(
+                Icons.favorite_border,
+                color: Colors.green,
+                size: 16,
+              ),
             ),
           ),
-        Positioned(
-          top: 4,
-          right: 4,
-          child: Container(
-            decoration: const BoxDecoration(
-                shape: BoxShape.circle, color: Colors.white),
-            padding: const EdgeInsets.all(4),
-            child: const Icon(Icons.favorite_border,
-                color: Colors.green, size: 16),
-          ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

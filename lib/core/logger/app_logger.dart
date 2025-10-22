@@ -1,55 +1,83 @@
+import 'dart:developer' as developer;
 import 'package:flutter/foundation.dart';
 import 'package:logger/logger.dart';
+import 'package:amar_shoday/core/logger/log_manager.dart';
 
+/// Global, structured logger for the whole app.
 class AppLogger {
   static final Logger _logger = Logger(
     printer: PrettyPrinter(
       methodCount: 0,
-      errorMethodCount: 8,
-      lineLength: 120,
+      errorMethodCount: 6,
+      lineLength: 100,
       colors: true,
       printEmojis: true,
-      dateTimeFormat: DateTimeFormat.none,
       noBoxingByDefault: true,
     ),
   );
 
   final String tag;
 
-  /// Default constructor
   AppLogger({this.tag = ''});
-
-  /// Factory for tagged logger
   factory AppLogger.getLogger(String tag) => AppLogger(tag: tag);
 
   void _log(
-    void Function(dynamic) logFunction,
+    Level level,
     dynamic message, {
     Object? error,
     StackTrace? stackTrace,
   }) {
+    final msg = tag.isNotEmpty ? '[$tag] $message' : message.toString();
+
     if (kDebugMode) {
-      final taggedMessage = tag.isNotEmpty ? "[$tag] $message" : message;
-      if (error != null) {
-        _logger.e(
-          "🚨 ERROR: $taggedMessage",
-          error: error,
-          stackTrace: stackTrace ?? StackTrace.current,
-        );
-      } else {
-        logFunction(taggedMessage);
-      }
+      _logger.log(level, msg, error: error, stackTrace: stackTrace);
+    }
+
+    LogManager.instance.addLog(
+      level: level,
+      message: msg,
+      error: error?.toString(),
+      stackTrace: stackTrace?.toString(),
+    );
+
+    if (kReleaseMode) {
+      developer.log(
+        msg,
+        name: tag,
+        error: error,
+        stackTrace: stackTrace,
+        level: _toDevLevel(level),
+      );
     }
   }
 
-  void i(dynamic message) => _log(_logger.i, message);
-  void d(dynamic message) => _log(_logger.d, message);
-  void w(dynamic message) => _log(_logger.w, message);
-  void e(dynamic message, [dynamic error, StackTrace? stackTrace]) =>
-      _log(_logger.e, message, error: error, stackTrace: stackTrace);
-  void t(dynamic message) => _log(_logger.t, message);
+  void v(dynamic message) => _log(Level.verbose, message);
+  void d(dynamic message) => _log(Level.debug, message);
+  void i(dynamic message) => _log(Level.info, message);
+  void w(dynamic message) => _log(Level.warning, message);
+  void e(dynamic message, [Object? error, StackTrace? stackTrace]) =>
+      _log(Level.error, message, error: error, stackTrace: stackTrace);
+  void wtf(dynamic message) => _log(Level.wtf, message);
 
   static void init({bool isProduction = false}) {
-    Logger.level = isProduction ? Level.warning : Level.trace;
+    Logger.level = isProduction ? Level.warning : Level.verbose;
+    LogManager.instance.init(isProduction: isProduction);
+  }
+
+  int _toDevLevel(Level level) {
+    switch (level) {
+      case Level.error:
+        return 1000;
+      case Level.warning:
+        return 900;
+      case Level.info:
+        return 800;
+      case Level.debug:
+        return 700;
+      case Level.verbose:
+        return 600;
+      default:
+        return 500;
+    }
   }
 }

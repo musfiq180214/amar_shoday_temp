@@ -1,5 +1,7 @@
 import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
+import 'package:amar_shoday/widgets/bell_icon.dart';
 import 'package:amar_shoday/widgets/bottom_navbar.dart';
+import 'package:amar_shoday/widgets/top_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:easy_localization/easy_localization.dart';
 
@@ -69,92 +71,65 @@ class _ReccProductsScreenState extends State<ReccProductsScreen> {
             child: Column(
               children: [
                 const SizedBox(height: 25),
-                Container(
-                  color: Colors.indigo.shade900,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 16, vertical: 6),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        children: [
-                          Image.asset(
-                            "assets/location_icon.png",
-                            width: 20,
-                            height: 20,
-                          ),
-                          const SizedBox(width: 4),
-                          const Text(
-                            "Bosila, Dhaka",
-                            style: TextStyle(color: Colors.white, fontSize: 14),
-                          ),
-                        ],
-                      ),
-                      IconButton(
-                        onPressed: () {
-                          if (context.locale.languageCode == 'en') {
-                            context.setLocale(const Locale('bn', 'BD'));
-                          } else {
-                            context.setLocale(const Locale('en', 'US'));
-                          }
-                        },
-                        icon: const Icon(Icons.language, color: Colors.white),
-                      ),
-                    ],
-                  ),
-                ),
+                const TopBar(),
                 Stack(
                   children: [
+                    // Background container with rounded bottom corners
                     Container(
                       height: 90,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius:
                             BorderRadius.vertical(bottom: Radius.circular(24)),
-                      ),
-                    ),
-                    Container(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 16, vertical: 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          IconButton(
-                            icon: const Icon(Icons.arrow_back,
-                                color: Colors.grey),
-                            onPressed: () => Navigator.pop(context),
-                          ),
-                          Text(
-                            'recommended_products'.tr(),
-                            style: TextStyle(
-                              color: Colors.indigo.shade900,
-                              fontSize: 16,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                          Container(
-                            decoration: const BoxDecoration(
-                              shape: BoxShape.circle,
-                              color: Colors.white,
-                            ),
-                            padding: const EdgeInsets.all(2),
-                            child: IconButton(
-                              icon: Image.asset(
-                                'assets/bell_icon.png',
-                                width: 30,
-                                height: 30,
-                              ),
-                              onPressed: () {},
-                              iconSize: 20,
-                              padding: EdgeInsets.zero,
-                              constraints: const BoxConstraints(),
-                            ),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Colors.black12,
+                            blurRadius: 4,
+                            offset: Offset(0, 2),
                           ),
                         ],
                       ),
                     ),
+                    // Foreground Row with back, title, and bell icon
+                    Positioned.fill(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 10),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            // Back button
+                            IconButton(
+                              icon: const Icon(Icons.arrow_back,
+                                  color: Colors.grey),
+                              onPressed: () => Navigator.pop(context),
+                              splashRadius: 24,
+                            ),
+
+                            // Title
+                            Expanded(
+                              child: Center(
+                                child: Text(
+                                  'recommended_products'.tr(),
+                                  style: TextStyle(
+                                    color: Colors.indigo.shade900,
+                                    fontSize: 18,
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                              ),
+                            ),
+
+                            const BellIconButton(),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
-                ),
+                )
               ],
             ),
           ),
