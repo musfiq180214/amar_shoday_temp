@@ -1,3 +1,4 @@
+import 'package:amar_shoday/features/Cart/presentation/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
 import 'package:amar_shoday/features/onboarding/presentation/splash_page.dart';
@@ -68,10 +69,15 @@ class AppRouter {
           settings: const RouteSettings(name: RouteNames.reccProducts),
           builder: (_) => const ReccProductsScreen(),
         );
-      case RouteNames.GroceryScreen:
+      case RouteNames.groceryScreen:
         return MaterialPageRoute(
-          settings: const RouteSettings(name: RouteNames.GroceryScreen),
+          settings: const RouteSettings(name: RouteNames.groceryScreen),
           builder: (_) => const GroceryScreen(),
+        );
+      case RouteNames.cart:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.cart),
+          builder: (_) => const CartScreen(),
         );
       default:
         return MaterialPageRoute(

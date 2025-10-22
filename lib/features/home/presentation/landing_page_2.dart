@@ -214,7 +214,7 @@ class _LandingPage2State extends State<LandingPage2>
               child: Column(
                 children: [
                   const SizedBox(height: 25),
-                  const TopBar(),
+                  const TopBarL2(),
                   Stack(
                     children: [
                       Container(
@@ -283,7 +283,7 @@ class _LandingPage2State extends State<LandingPage2>
           _sectionWithHorizontalItems("grocery_items".tr(), grocery,
               itemImages: groceryImages,
               bordered: true,
-              routeName: RouteNames.GroceryScreen),
+              routeName: RouteNames.groceryScreen),
           const SizedBox(height: 12),
           _buildAds(),
           _buildSectionTitle("top_sales".tr()),

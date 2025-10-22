@@ -10,5 +10,6 @@ class RouteNames {
   static const String more = '/more';
   static const String reccProducts = '/recc-products';
   static const String searchResults = '/search-results';
-  static const String GroceryScreen = '/grocery';
+  static const String groceryScreen = '/grocery';
+  static const String cart = '/cart';
 }

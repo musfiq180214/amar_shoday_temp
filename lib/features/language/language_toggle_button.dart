@@ -1,41 +1,26 @@
-// import 'package:flutter/material.dart';
-// import 'package:easy_localization/easy_localization.dart';
-
-// class LanguageToggleButton extends StatelessWidget {
-//   const LanguageToggleButton({super.key});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final isEnglish = context.locale.languageCode == 'en';
-
-//     return IconButton(
-//       icon: Icon(isEnglish ? Icons.language : Icons.translate),
-//       onPressed: () {
-//         final newLocale = isEnglish ? const Locale('bn') : const Locale('en');
-//         context.setLocale(newLocale);
-
-//         // Force rebuild widgets using .tr()
-//         (context as Element).markNeedsBuild();
-//       },
-//     );
-//   }
-// }
-
+import 'package:amar_shoday/features/language/language_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:easy_localization/easy_localization.dart';
 
-class LanguageToggleButton extends StatelessWidget {
+class LanguageToggleButton extends ConsumerWidget {
   const LanguageToggleButton({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    final isEnglish = context.locale == const Locale('en', 'US');
+  Widget build(BuildContext context, WidgetRef ref) {
+    final currentLocale = ref.watch(languageNotifierProvider);
 
     return IconButton(
-      icon: Icon(isEnglish ? Icons.language : Icons.translate),
+      icon: Icon(
+        currentLocale.languageCode == 'en' ? Icons.language : Icons.translate,
+        color: Colors.white,
+      ),
       onPressed: () {
-        final newLocale =
-            isEnglish ? const Locale('bn', 'BD') : const Locale('en', 'US');
+        // Toggle Riverpod state
+        ref.read(languageNotifierProvider.notifier).toggleLanguage();
+
+        // Update EasyLocalization as well
+        final newLocale = ref.read(languageNotifierProvider);
         context.setLocale(newLocale);
       },
     );

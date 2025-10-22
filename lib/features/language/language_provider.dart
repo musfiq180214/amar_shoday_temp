@@ -16,4 +16,8 @@ class LanguageNotifier extends StateNotifier<Locale> {
       state = const Locale('en', 'US');
     }
   }
+
+  void setLocale(Locale locale) {
+    state = locale;
+  }
 }

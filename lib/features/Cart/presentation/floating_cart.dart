@@ -1,5 +1,6 @@
 // widgets/floating_cart.dart
-import 'package:amar_shoday/features/Cart/controller/cart_controller.dart';
+import 'package:amar_shoday/core/routes/route_names.dart';
+import 'package:amar_shoday/features/Cart/controller/floating_cart_controller.dart';
 import 'package:flutter/material.dart';
 
 class FloatingCart extends StatefulWidget {
@@ -49,9 +50,12 @@ class _FloatingCartState extends State<FloatingCart>
     super.dispose();
   }
 
-  Widget _buildCart() {
+  Widget _buildCart(BuildContext context) {
     return GestureDetector(
-      onTap: widget.onTap ?? () {},
+      onTap: () {
+        // Navigate to Cart screen
+        Navigator.pushNamed(context, RouteNames.cart);
+      },
       child: Image.asset(
         "assets/empty.png",
         width: 60,
@@ -70,7 +74,7 @@ class _FloatingCartState extends State<FloatingCart>
       left: position.dx,
       top: position.dy,
       child: Draggable(
-        feedback: _buildCart(),
+        feedback: _buildCart(context),
         childWhenDragging: const SizedBox.shrink(),
         onDragEnd: (details) {
           double dx = details.offset.dx.clamp(0.0, screenSize.width - 60);
@@ -87,7 +91,7 @@ class _FloatingCartState extends State<FloatingCart>
 
           _animationController.forward(from: 0); // ✅ No new listener here
         },
-        child: _buildCart(),
+        child: _buildCart(context),
       ),
     );
   }

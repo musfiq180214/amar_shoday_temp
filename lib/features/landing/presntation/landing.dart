@@ -11,7 +11,7 @@ class Landing extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text("landing_title".tr()),
-        actions: const [ThemeToggleButton(), LanguageToggleButton()],
+        actions: const [LanguageToggleButton()],
       ),
       body: Center(
         child: Text(
