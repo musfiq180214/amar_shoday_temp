@@ -1,15 +1,17 @@
+import 'package:amar_shoday/features/language/language_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart'; // ✅ Use Riverpod, not Provider
 import 'package:easy_localization/easy_localization.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
 
-class LanguagePage extends StatefulWidget {
+class LanguagePage extends ConsumerStatefulWidget {
   const LanguagePage({super.key});
 
   @override
-  State<LanguagePage> createState() => _LanguagePageState();
+  ConsumerState<LanguagePage> createState() => _LanguagePageState();
 }
 
-class _LanguagePageState extends State<LanguagePage> {
+class _LanguagePageState extends ConsumerState<LanguagePage> {
   String? district;
   String? thana;
   String? area;
@@ -42,24 +44,39 @@ class _LanguagePageState extends State<LanguagePage> {
               style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
             ),
             const SizedBox(height: 8),
+
+            // ✅ Language Selection Chips
             Row(
               children: [
                 ChoiceChip(
                   label: const Text("Eng"),
                   selected: currentLocale == const Locale('en', 'US'),
-                  onSelected: (_) =>
-                      context.setLocale(const Locale('en', 'US')),
+                  onSelected: (_) {
+                    final newLocale = const Locale('en', 'US');
+                    context.setLocale(newLocale);
+                    ref
+                        .read(languageNotifierProvider.notifier)
+                        .setLocale(newLocale);
+                  },
                 ),
                 const SizedBox(width: 8),
                 ChoiceChip(
                   label: const Text("বাংলা"),
                   selected: currentLocale == const Locale('bn', 'BD'),
-                  onSelected: (_) =>
-                      context.setLocale(const Locale('bn', 'BD')),
+                  onSelected: (_) {
+                    final newLocale = const Locale('bn', 'BD');
+                    context.setLocale(newLocale);
+                    ref
+                        .read(languageNotifierProvider.notifier)
+                        .setLocale(newLocale);
+                  },
                 ),
               ],
             ),
+
             const SizedBox(height: 20),
+
+            // ✅ Notice section
             Container(
               padding: const EdgeInsets.all(12),
               decoration: BoxDecoration(
@@ -70,7 +87,10 @@ class _LanguagePageState extends State<LanguagePage> {
                 "We are currently operating in selected areas only. Please let us know your area if it is not already in the list",
               ),
             ),
+
             const SizedBox(height: 20),
+
+            // ✅ District Dropdown
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(
                 labelText: "Select District",
@@ -82,7 +102,10 @@ class _LanguagePageState extends State<LanguagePage> {
                   .map((d) => DropdownMenuItem(value: d, child: Text(d)))
                   .toList(),
             ),
+
             const SizedBox(height: 12),
+
+            // ✅ Thana Dropdown
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(
                 labelText: "Select Thana",
@@ -94,7 +117,10 @@ class _LanguagePageState extends State<LanguagePage> {
                   .map((t) => DropdownMenuItem(value: t, child: Text(t)))
                   .toList(),
             ),
+
             const SizedBox(height: 12),
+
+            // ✅ Area Dropdown
             DropdownButtonFormField<String>(
               decoration: const InputDecoration(
                 labelText: "Select Area",
@@ -106,11 +132,19 @@ class _LanguagePageState extends State<LanguagePage> {
                   .map((a) => DropdownMenuItem(value: a, child: Text(a)))
                   .toList(),
             ),
+
             const SizedBox(height: 16),
+
+            // ✅ Error message
             if (errorMessage != null)
-              Text(errorMessage!,
-                  style: const TextStyle(color: Colors.red, fontSize: 13)),
+              Text(
+                errorMessage!,
+                style: const TextStyle(color: Colors.red, fontSize: 13),
+              ),
+
             const SizedBox(height: 20),
+
+            // ✅ Bottom Row
             Row(
               children: [
                 GestureDetector(
@@ -119,8 +153,9 @@ class _LanguagePageState extends State<LanguagePage> {
                   child: const Text(
                     "Let us know",
                     style: TextStyle(
-                        color: Colors.blue,
-                        decoration: TextDecoration.underline),
+                      color: Colors.blue,
+                      decoration: TextDecoration.underline,
+                    ),
                   ),
                 ),
                 const Spacer(),
@@ -128,8 +163,9 @@ class _LanguagePageState extends State<LanguagePage> {
                   width: 120,
                   child: ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        backgroundColor: Colors.green,
-                        foregroundColor: Colors.white),
+                      backgroundColor: Colors.green,
+                      foregroundColor: Colors.white,
+                    ),
                     onPressed: () {
                       if (district == null || thana == null || area == null) {
                         setState(() {
@@ -145,7 +181,7 @@ class _LanguagePageState extends State<LanguagePage> {
                   ),
                 ),
               ],
-            )
+            ),
           ],
         ),
       ),

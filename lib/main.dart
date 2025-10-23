@@ -33,14 +33,14 @@ class MyApp extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final themeMode = ref.watch(themeNotifierProvider);
+    //final themeMode = ref.watch(themeNotifierProvider);
     final locale = ref.watch(languageNotifierProvider);
 
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData.light(),
       darkTheme: ThemeData.dark(),
-      themeMode: themeMode,
+      //themeMode: themeMode,
       locale: locale,
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
