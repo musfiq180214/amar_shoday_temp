@@ -1,4 +1,5 @@
 import 'package:amar_shoday/features/cart/presentation/cart_screen.dart';
+import 'package:amar_shoday/features/categories/presentation/category_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
 import 'package:amar_shoday/features/onboarding/presentation/splash_page.dart';
@@ -37,11 +38,11 @@ class AppRouter {
           settings: const RouteSettings(name: RouteNames.landing2),
           builder: (_) => const LandingPage2(),
         );
-      // case RouteNames.catogories:
-      //   return MaterialPageRoute(
-      //     settings: const RouteSettings(name: RouteNames.catogories),
-      //     builder: (_) => const CategoriesPage(),
-      //   );
+      case RouteNames.catogories:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.catogories),
+          builder: (_) => const CategoryScreen(),
+        );
       case RouteNames.favourites:
         return MaterialPageRoute(
           settings: const RouteSettings(name: RouteNames.favourites),
