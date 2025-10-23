@@ -196,18 +196,23 @@ class _FloatingSupportState extends State<FloatingSupport>
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   IconButton(
-                    icon:
-                        const Icon(Icons.close, color: Colors.white, size: 20),
+                    iconSize: 50, // this controls the clickable/icon size
                     padding: const EdgeInsets.all(4),
                     onPressed: () => _controller.togglePopup(),
+                    icon: SizedBox(
+                      width: 20,
+                      height: 20,
+                      child:
+                          Image.asset('assets/close.png', fit: BoxFit.contain),
+                    ),
                   ),
                 ],
               ),
               _buildPopupOption(
-                  "Call for order", "assets/call.png", _callNumber),
+                  "Call for order", "assets/Call.png", _callNumber),
               const Divider(color: Colors.white, height: 0.5),
               _buildPopupOption(
-                  "Order via WhatsApp", "assets/whatsapp.png", _openWhatsApp),
+                  "Order via WhatsApp", "assets/Whatsapp.png", _openWhatsApp),
 
               const Divider(color: Colors.white, height: 0.5),
               const SizedBox(height: 50)
