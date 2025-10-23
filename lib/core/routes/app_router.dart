@@ -1,4 +1,4 @@
-import 'package:amar_shoday/features/Cart/presentation/cart_screen.dart';
+import 'package:amar_shoday/features/cart/presentation/cart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
 import 'package:amar_shoday/features/onboarding/presentation/splash_page.dart';
@@ -77,7 +77,7 @@ class AppRouter {
       case RouteNames.cart:
         return MaterialPageRoute(
           settings: const RouteSettings(name: RouteNames.cart),
-          builder: (_) => const CartScreen(),
+          builder: (_) => CartScreen(),
         );
       default:
         return MaterialPageRoute(

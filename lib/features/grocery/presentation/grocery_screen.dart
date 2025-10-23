@@ -5,7 +5,7 @@ import 'package:amar_shoday/widgets/bottom_navbar.dart';
 import 'package:amar_shoday/widgets/top_bar.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
-import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
+import 'package:amar_shoday/features/cart/presentation/floating_cart.dart';
 
 class GroceryScreen extends StatefulWidget {
   const GroceryScreen({super.key});
@@ -504,7 +504,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
             },
           ),
         ),
-        const FloatingCart(),
+        FloatingCart(),
       ],
     );
   }

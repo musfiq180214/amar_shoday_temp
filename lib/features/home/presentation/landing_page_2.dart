@@ -1,7 +1,8 @@
 import 'dart:async';
 import 'package:amar_shoday/core/constants/colors.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
-import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
+import 'package:amar_shoday/features/cart/presentation/floating_cart.dart';
+import 'package:amar_shoday/features/support/widgets/floating_support.dart';
 import 'package:amar_shoday/widgets/bell_icon.dart';
 import 'package:amar_shoday/widgets/bottom_navbar.dart';
 import 'package:amar_shoday/widgets/top_bar.dart';
@@ -258,7 +259,8 @@ class _LandingPage2State extends State<LandingPage2>
             },
           ),
         ),
-        const FloatingCart(),
+        FloatingCart(),
+        FloatingSupport(),
       ],
     );
   }

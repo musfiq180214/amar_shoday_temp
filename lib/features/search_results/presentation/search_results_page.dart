@@ -1,4 +1,4 @@
-import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
+import 'package:amar_shoday/features/cart/presentation/floating_cart.dart';
 import 'package:amar_shoday/widgets/bell_icon.dart';
 import 'package:amar_shoday/widgets/top_bar.dart';
 import 'package:flutter/material.dart';

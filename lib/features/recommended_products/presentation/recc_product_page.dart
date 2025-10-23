@@ -1,4 +1,4 @@
-import 'package:amar_shoday/features/Cart/presentation/floating_cart.dart';
+import 'package:amar_shoday/features/cart/presentation/floating_cart.dart';
 import 'package:amar_shoday/widgets/bell_icon.dart';
 import 'package:amar_shoday/widgets/bottom_navbar.dart';
 import 'package:amar_shoday/widgets/top_bar.dart';
@@ -271,7 +271,7 @@ class _ReccProductsScreenState extends State<ReccProductsScreen> {
           },
         ),
       ),
-      const FloatingCart(),
+      FloatingCart(),
     ]);
   }
 
