@@ -35,6 +35,16 @@ class _LandingPage2State extends State<LandingPage2>
     "Cosmetics",
     "Medicine"
   ];
+
+  final Map<String, String> categoryRoutes = const {
+    "Groceries": RouteNames.groceryScreen,
+    // "Meat": RouteNames.meat,
+    // "Vegetable": RouteNames.vegetable,
+    // "Dairy": RouteNames.dairy,
+    // "Cosmetics": RouteNames.cosmetics,
+    // "Medicine": RouteNames.medicine,
+  };
+
   final recommended = const [
     "Marium Date",
     "Haleem Mix",
@@ -449,6 +459,8 @@ class _LandingPage2State extends State<LandingPage2>
               Text("categories".tr(),
                   style: const TextStyle(
                       fontWeight: FontWeight.bold, fontSize: 18)),
+              Text("view_all".tr(),
+                  style: const TextStyle(decoration: TextDecoration.underline))
             ],
           ),
         ),
@@ -561,31 +573,39 @@ class _LandingPage2State extends State<LandingPage2>
       itemBuilder: (context, index) {
         final name = categories[index];
         final imgPath = categoryImages[name];
-        return Column(
-          children: [
-            CircleAvatar(
-              radius: 35,
-              backgroundColor: Colors.blue.shade100,
-              child: ClipOval(
-                child: imgPath != null
-                    ? Image.asset(
-                        imgPath,
-                        width: 70,
-                        height: 70,
-                        fit: BoxFit.cover,
-                      )
-                    : Center(
-                        child: Text(
-                          name[0],
-                          style: const TextStyle(
-                              fontSize: 18, color: Colors.white),
+        return InkWell(
+          onTap: () {
+            final route = categoryRoutes[name];
+            if (route != null) {
+              Navigator.pushNamed(context, route);
+            }
+          },
+          child: Column(
+            children: [
+              CircleAvatar(
+                radius: 35,
+                backgroundColor: Colors.blue.shade100,
+                child: ClipOval(
+                  child: imgPath != null
+                      ? Image.asset(
+                          imgPath,
+                          width: 70,
+                          height: 70,
+                          fit: BoxFit.cover,
+                        )
+                      : Center(
+                          child: Text(
+                            name[0],
+                            style: const TextStyle(
+                                fontSize: 18, color: Colors.white),
+                          ),
                         ),
-                      ),
+                ),
               ),
-            ),
-            const SizedBox(height: 6),
-            Text(name),
-          ],
+              const SizedBox(height: 6),
+              Text(name),
+            ],
+          ),
         );
       },
     );

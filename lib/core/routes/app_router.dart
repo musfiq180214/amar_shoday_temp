@@ -6,7 +6,7 @@ import 'package:amar_shoday/features/onboarding/presentation/language_page.dart'
 import 'package:amar_shoday/features/onboarding/presentation/suggest_area_page.dart';
 import 'package:amar_shoday/features/landing/presntation/landing.dart';
 import 'package:amar_shoday/features/home/presentation/landing_page_2.dart';
-import 'package:amar_shoday/features/categories/presentation/categories_page.dart';
+// import 'package:amar_shoday/features/categories/presentation/categories_page.dart';
 import 'package:amar_shoday/features/favourites/presentation/favourites_page.dart';
 import 'package:amar_shoday/features/more/presentation/more_page.dart';
 import 'package:amar_shoday/features/recommended_products/presentation/recc_product_page.dart';
@@ -37,11 +37,11 @@ class AppRouter {
           settings: const RouteSettings(name: RouteNames.landing2),
           builder: (_) => const LandingPage2(),
         );
-      case RouteNames.catogories:
-        return MaterialPageRoute(
-          settings: const RouteSettings(name: RouteNames.catogories),
-          builder: (_) => const CategoriesPage(),
-        );
+      // case RouteNames.catogories:
+      //   return MaterialPageRoute(
+      //     settings: const RouteSettings(name: RouteNames.catogories),
+      //     builder: (_) => const CategoriesPage(),
+      //   );
       case RouteNames.favourites:
         return MaterialPageRoute(
           settings: const RouteSettings(name: RouteNames.favourites),

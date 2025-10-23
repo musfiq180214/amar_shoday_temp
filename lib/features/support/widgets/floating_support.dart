@@ -8,7 +8,7 @@ class FloatingSupportController {
   factory FloatingSupportController() => _instance;
   FloatingSupportController._internal();
 
-  Offset position = const Offset(300, 425);
+  Offset position = const Offset(300, 600);
   bool isOpen = false;
 
   final List<VoidCallback> _listeners = [];
@@ -18,12 +18,16 @@ class FloatingSupportController {
 
   void updatePosition(Offset newPosition) {
     position = newPosition;
-    for (var listener in _listeners) listener();
+    for (var listener in _listeners) {
+      listener();
+    }
   }
 
   void togglePopup() {
     isOpen = !isOpen;
-    for (var listener in _listeners) listener();
+    for (var listener in _listeners) {
+      listener();
+    }
   }
 }
 
@@ -90,8 +94,8 @@ class _FloatingSupportState extends State<FloatingSupport>
         child: Center(
           child: Image.asset(
             "assets/support.png",
-            width: 50,
-            height: 50,
+            width: 60,
+            height: 60,
             fit: BoxFit.contain,
           ),
         ),
@@ -163,12 +167,21 @@ class _FloatingSupportState extends State<FloatingSupport>
                 ),
               ),
             ),
-            Image.asset(
-              assetPath,
-              width: 24,
-              height: 24,
-              fit: BoxFit.contain,
-            ),
+            Container(
+              width: 40, // circle diameter
+              height: 40,
+              decoration: const BoxDecoration(
+                color: Colors.white, // background color of the circle
+                shape: BoxShape.circle,
+              ),
+              alignment: Alignment.center,
+              child: Image.asset(
+                assetPath,
+                width: 24,
+                height: 24,
+                fit: BoxFit.contain,
+              ),
+            )
           ],
         ),
       ),
@@ -239,7 +252,7 @@ class _FloatingSupportState extends State<FloatingSupport>
         60 + // Call option
         1 + // Divider
         60; // WhatsApp option
-    double gap = -20; // gap between button and popup
+    double gap = 10; // gap between button and popup
     double top = pos.dy - popupHeight - gap;
 
     return Stack(
