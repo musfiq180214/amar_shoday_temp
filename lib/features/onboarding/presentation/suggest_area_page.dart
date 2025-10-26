@@ -89,17 +89,24 @@ class _SuggestAreaPageState extends State<SuggestAreaPage> {
                           .map(
                               (a) => DropdownMenuItem(value: a, child: Text(a)))
                           .toList(),
+                      validator: (v) => v == null ? "Select age" : null,
                       onChanged: (v) => age = v,
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
                       decoration:
                           const InputDecoration(labelText: "Occupation"),
+                      validator: (v) => v == null || v.trim().isEmpty
+                          ? "Enter your occupation"
+                          : null,
                       onSaved: (v) => occupation = v,
                     ),
                     const SizedBox(height: 12),
                     TextFormField(
                       decoration: const InputDecoration(labelText: "Email ID"),
+                      validator: (v) => v == null || v.trim().isEmpty
+                          ? "Enter your email"
+                          : null,
                       keyboardType: TextInputType.emailAddress,
                       onSaved: (v) => email = v,
                     ),
@@ -130,8 +137,7 @@ class _SuggestAreaPageState extends State<SuggestAreaPage> {
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(content: Text("Welcome to Amar Shoday")),
                       );
-                      Navigator.pushReplacementNamed(
-                          context, RouteNames.landing2);
+                      Navigator.pushReplacementNamed(context, RouteNames.login);
                     }
                   },
                   child: const Text("Submit"),

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:amar_shoday/core/constants/colors.dart';
 import 'package:amar_shoday/core/routes/route_names.dart';
 import 'package:amar_shoday/features/cart/presentation/floating_cart.dart';
+import 'package:amar_shoday/features/home/widget/landing_2_widgets.dart';
 import 'package:amar_shoday/features/support/widgets/floating_support.dart';
 import 'package:amar_shoday/widgets/bell_icon.dart';
 import 'package:amar_shoday/widgets/bottom_navbar.dart';
@@ -560,55 +561,7 @@ class _LandingPage2State extends State<LandingPage2>
   }
 
   Widget _buildCategories() {
-    return GridView.builder(
-      shrinkWrap: true,
-      padding: const EdgeInsets.symmetric(horizontal: 8),
-      physics: const NeverScrollableScrollPhysics(),
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 3,
-        crossAxisSpacing: 12,
-        mainAxisSpacing: 12,
-      ),
-      itemCount: categories.length,
-      itemBuilder: (context, index) {
-        final name = categories[index];
-        final imgPath = categoryImages[name];
-        return InkWell(
-          onTap: () {
-            final route = categoryRoutes[name];
-            if (route != null) {
-              Navigator.pushNamed(context, route);
-            }
-          },
-          child: Column(
-            children: [
-              CircleAvatar(
-                radius: 35,
-                backgroundColor: Colors.blue.shade100,
-                child: ClipOval(
-                  child: imgPath != null
-                      ? Image.asset(
-                          imgPath,
-                          width: 70,
-                          height: 70,
-                          fit: BoxFit.cover,
-                        )
-                      : Center(
-                          child: Text(
-                            name[0],
-                            style: const TextStyle(
-                                fontSize: 18, color: Colors.white),
-                          ),
-                        ),
-                ),
-              ),
-              const SizedBox(height: 6),
-              Text(name),
-            ],
-          ),
-        );
-      },
-    );
+    return const CategoriesWidget();
   }
 
   Widget _promoCard(String text) {

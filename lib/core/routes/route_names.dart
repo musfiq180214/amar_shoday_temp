@@ -3,6 +3,7 @@ class RouteNames {
   static const String splash = '/splash';
   static const String language = '/language';
   static const String suggestArea = '/suggest-area';
+  static const String login = '/login';
   static const String landing = '/landing';
   static const String landing2 = '/landing2';
   static const String catogories = '/categories';

@@ -1,166 +1,97 @@
-import 'dart:convert';
-
 import 'package:amar_shoday/core/logger/app_logger.dart';
+import 'package:amar_shoday/features/home/provider/landing_2_providers.dart';
 import 'package:dio/dio.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+
+// Auth token provider (state is managed centrally)
+final authTokenProvider = StateProvider<String?>((ref) => null);
+
+// ApiClient provider
+final apiClientProvider = Provider<ApiClient>((ref) {
+  final logger = ref.read(loggerProvider);
+  return ApiClient(logger, ref);
+});
 
 class ApiClient {
   final Dio _dio;
-  final AppLogger _logger; // <- changed to AppLogger
+  final AppLogger _logger;
+  final Ref _ref;
 
-  ApiClient(this._logger)
+  ApiClient(this._logger, this._ref)
       : _dio = Dio(
           BaseOptions(
-            baseUrl: "https://api.github.com",
-            headers: {
-              // "Authorization": "token $githubToken",
-              "Accept": "application/vnd.github.v3+json",
-            },
+            baseUrl: "https://stage-api.amarshoday.com/",
+            connectTimeout: const Duration(seconds: 15),
+            receiveTimeout: const Duration(seconds: 15),
+            headers: {"Accept": "application/json"},
           ),
         ) {
+    // Add interceptors
     _dio.interceptors.add(
       InterceptorsWrapper(
         onRequest: (options, handler) {
-          _logger.i("➡️ [REQUEST] ${options.method} ${options.uri}");
+          // Attach token if available
+          final token = _ref.read(authTokenProvider);
+          if (token != null) {
+            options.headers['Authorization'] = 'Bearer $token';
+          }
+
+          _logger.i(
+            "➡️ [REQUEST] ${options.method} ${options.uri}\n"
+            "Body: ${options.data ?? 'Empty'}\n"
+            "Headers: ${options.headers}",
+          );
           handler.next(options);
         },
         onResponse: (response, handler) {
-          _logger.i("✅ [RESPONSE] ${response.statusCode} ${response.realUri}");
+          _logger.i(
+            "✅ [RESPONSE] ${response.statusCode} ${response.realUri}\n"
+            "Response: ${response.data}",
+          );
           handler.next(response);
         },
         onError: (DioException e, handler) {
-          if (e.type == DioExceptionType.connectionError) {
-            _logger.e("❌ [NO INTERNET] ${e.message}");
-            return handler.reject(
-              DioException(
-                requestOptions: e.requestOptions,
-                error: "No Internet Connection",
-                type: DioExceptionType.connectionError,
-              ),
-            );
-          }
-
-          if (e.response != null) {
-            final errorData = e.response?.data;
-            final message = errorData is Map ? errorData['message'] : e.message;
-            _logger.w("⚠️ [API ERROR] ${e.response?.statusCode} - $message");
-            return handler.reject(
-              DioException(
-                requestOptions: e.requestOptions,
-                message: "Error ${e.response?.statusCode}: $message",
-                error: "Error ${e.response?.statusCode}: $message",
-                response: e.response,
-              ),
-            );
-          }
-
-          _logger.e("❌ [UNKNOWN ERROR] ${e.message}");
+          _logger.e("❌ [ERROR] ${e.message}");
           handler.next(e);
         },
       ),
     );
   }
 
-  // Fetch a user's repositories
-  Future<List<dynamic>> getUserRepos(String username) async {
-    final res = await _dio.get("/users/$username/repos");
-    return res.data;
-  }
+  // ---------------- Login API ----------------
+  Future<Map<String, dynamic>> login(String phone, String password) async {
+    final res = await _dio.post('/users/login', data: {
+      'phone': phone,
+      'password': password,
+    });
 
-  // Fetch a user's profile info
-  Future<Map<String, dynamic>> getUserInfo(String username) async {
-    final res = await _dio.get("/users/$username");
-    return res.data;
-  }
-
-  Future<List<dynamic>> getPublicRepos({
-    int since = 0,
-    int perPage = 20,
-  }) async {
-    final res = await _dio.get(
-      "/repositories",
-      queryParameters: {"since": since, "per_page": perPage},
-    );
-    return res.data;
-  }
-
-  Future<List<dynamic>> getRepoContents({
-    required String owner,
-    required String repo,
-    String path = '',
-  }) async {
-    final res = await _dio.get("/repos/$owner/$repo/contents/$path");
-    return res.data;
-  }
-
-  Future<String> getFileContent({
-    required String owner,
-    required String repo,
-    required String path,
-  }) async {
-    try {
-      final response = await _dio.get(
-        '/repos/$owner/$repo/contents/$path',
-        options: Options(
-          headers: {
-            // "Authorization": "token $githubToken",
-            "Accept": "application/vnd.github.v3+json",
-          },
-        ),
-      );
-
-      final data = response.data;
-
-      if (data['encoding'] == 'base64') {
-        final contentEncoded = data['content'].replaceAll('\n', '');
-        return utf8.decode(base64.decode(contentEncoded));
-      } else {
-        return data['content'] ?? '';
-      }
-    } catch (e) {
-      rethrow; // let the UI handle the error
+    // Save token centrally
+    final token = res.data['token'] as String?;
+    if (token != null) {
+      _ref.read(authTokenProvider.notifier).state = token;
     }
-  }
 
-  // In your ApiClient class
-  Future<Map<String, dynamic>> getAuthenticatedUser() async {
-    final response = await _dio.get(
-      'https://api.github.com/user', // GitHub endpoint for authenticated user
-      options: Options(
-        headers: {
-          // 'Authorization': 'token $githubToken',
-          'Accept': 'application/vnd.github.v3+json',
-        },
-      ),
-    );
-
-    return response.data as Map<String, dynamic>;
-  }
-
-  // Get all starred repos of authenticated user
-  Future<List<dynamic>> getStarredRepos() async {
-    final res = await _dio.get("/user/starred");
     return res.data;
   }
 
-  // Star a repo
-  Future<void> starRepo({required String owner, required String repo}) async {
-    await _dio.put("/user/starred/$owner/$repo");
+  // ---------------- Other APIs ----------------
+  Future<List<dynamic>> getCategories() async {
+    final res = await _dio.get('/user/categories');
+    return res.data;
   }
 
-  // Unstar a repo
-  Future<void> unstarRepo({required String owner, required String repo}) async {
-    await _dio.delete("/user/starred/$owner/$repo");
+  Future<List<dynamic>> getSubCategories() async {
+    final res = await _dio.get('/user/sub_categories');
+    return res.data;
   }
 
-  Future<List<dynamic>> searchRepos(
-    String query, {
-    int page = 1,
-    int perPage = 20,
-  }) async {
-    final response = await _dio.get(
-      '/search/repositories',
-      queryParameters: {'q': query, 'per_page': perPage, 'page': page},
-    );
-    return response.data['items'] as List<dynamic>;
+  Future<Map<String, dynamic>> getCategoryProducts(String slug) async {
+    final res = await _dio.get('/user/categories/$slug');
+    return res.data;
+  }
+
+  // Optional: logout method to clear token
+  void logout() {
+    _ref.read(authTokenProvider.notifier).state = null;
   }
 }
