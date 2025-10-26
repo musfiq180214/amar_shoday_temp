@@ -11,10 +11,24 @@ class SplashPage extends StatefulWidget {
 }
 
 class _SplashPageState extends State<SplashPage> {
-  @override
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   Timer(const Duration(seconds: 2), () {
+  //     Navigator.pushReplacementNamed(context, RouteNames.landing2);
+  //   });
+  // }
+
+  // void initState() {
+  //   super.initState();
+  //   Timer(const Duration(seconds: 5), () {
+  //     Navigator.pushReplacementNamed(context, RouteNames.login);
+  //   });
+  // }
+
   void initState() {
     super.initState();
-    Timer(const Duration(seconds: 2), () {
+    Timer(const Duration(seconds: 5), () {
       Navigator.pushReplacementNamed(context, RouteNames.language);
     });
   }
@@ -22,6 +36,7 @@ class _SplashPageState extends State<SplashPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(

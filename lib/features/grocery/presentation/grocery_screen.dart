@@ -99,7 +99,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
 
   Widget _buildCategories() {
     return Padding(
-      padding: const EdgeInsets.only(bottom: 8), // small breathing space
+      padding: const EdgeInsets.only(bottom: 8),
       child: GridView.builder(
         shrinkWrap: true,
         padding: const EdgeInsets.symmetric(horizontal: 8),
@@ -108,7 +108,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
           crossAxisCount: 3,
           crossAxisSpacing: 12,
           mainAxisSpacing: 12,
-          childAspectRatio: 0.9, // ✅ keeps consistent size, prevents overflow
+          childAspectRatio: 0.9,
         ),
         itemCount: sub_categories.length,
         itemBuilder: (context, index) {
@@ -139,8 +139,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
                       ]
                     : [],
               ),
-              margin: const EdgeInsets.symmetric(
-                  vertical: 4), // ✅ prevents overflow
+              margin: const EdgeInsets.symmetric(vertical: 4),
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -160,7 +159,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
                                 name[0],
                                 style: const TextStyle(
                                   fontSize: 18,
-                                  color: Colors.white,
+                                  color: Colors.black, // forced black
                                 ),
                               ),
                             ),
@@ -170,8 +169,7 @@ class _GroceryScreenState extends State<GroceryScreen> {
                   Text(
                     name,
                     style: TextStyle(
-                      color:
-                          isSelected ? Colors.brown.shade700 : Colors.black87,
+                      color: Colors.black, // forced black
                       fontWeight:
                           isSelected ? FontWeight.bold : FontWeight.normal,
                     ),
@@ -193,9 +191,14 @@ class _GroceryScreenState extends State<GroceryScreen> {
           child: Row(
             children: [
               const SizedBox(width: 1),
-              Text("sub_categories".tr(),
-                  style: const TextStyle(
-                      fontWeight: FontWeight.normal, fontSize: 22)),
+              Text(
+                "sub_categories".tr(),
+                style: const TextStyle(
+                  fontWeight: FontWeight.normal,
+                  fontSize: 22,
+                  color: Colors.black, // forced black
+                ),
+              ),
             ],
           ),
         ),
@@ -218,65 +221,72 @@ class _GroceryScreenState extends State<GroceryScreen> {
 
   Widget _buildSearchBar() {
     return Container(
-      // color: Colors.indigo.shade900,
       padding: const EdgeInsets.symmetric(vertical: 12),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 12.0),
         child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.bgColor,
-              borderRadius: BorderRadius.circular(8),
-              boxShadow: const [
-                BoxShadow(
-                  color: Colors.black12,
-                  blurRadius: 4,
-                  offset: Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                const SizedBox(width: 12),
-                const Icon(Icons.search, color: Colors.grey),
-                const SizedBox(width: 8),
-                Expanded(
-                  child: TextField(
-                    controller: _searchController,
-                    decoration: InputDecoration(
-                      hintText: 'Search_by_product_brand'.tr(),
-                      border: InputBorder.none,
-                    ),
-                    onSubmitted: (_) => _navigateToSearchResults(),
+          decoration: BoxDecoration(
+            color: AppColors.bgColor,
+            borderRadius: BorderRadius.circular(8),
+            boxShadow: const [
+              BoxShadow(
+                color: Colors.black12,
+                blurRadius: 4,
+                offset: Offset(0, 2),
+              ),
+            ],
+          ),
+          child: Row(
+            children: [
+              const SizedBox(width: 12),
+              const Icon(Icons.search, color: Colors.grey),
+              const SizedBox(width: 8),
+              Expanded(
+                child: TextField(
+                  controller: _searchController,
+                  style: const TextStyle(
+                    color: Colors.black, // ✅ input text color
                   ),
-                ),
-                GestureDetector(
-                  onTap: _navigateToSearchResults,
-                  child: Container(
-                    padding:
-                        const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                    margin: const EdgeInsets.only(right: 8),
-                    decoration: BoxDecoration(
-                      color: AppColors.secondaryColor,
-                      borderRadius: BorderRadius.circular(6),
+                  decoration: InputDecoration(
+                    hintText: 'Search_by_product_brand'.tr(),
+                    hintStyle: const TextStyle(
+                      color: Colors.black, // ✅ force hint text to pure black
                     ),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        const Icon(Icons.search, color: Colors.white),
-                        const SizedBox(width: 4),
-                        Text(
-                          'search'.tr(),
-                          style: const TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 15),
+                    border: InputBorder.none,
+                  ),
+                  onSubmitted: (_) => _navigateToSearchResults(),
+                ),
+              ),
+              GestureDetector(
+                onTap: _navigateToSearchResults,
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                  margin: const EdgeInsets.only(right: 8),
+                  decoration: BoxDecoration(
+                    color: AppColors.secondaryColor,
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      const Icon(Icons.search, color: Colors.white),
+                      const SizedBox(width: 4),
+                      Text(
+                        'search'.tr(),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
-              ],
-            )),
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
@@ -308,9 +318,14 @@ class _GroceryScreenState extends State<GroceryScreen> {
                     Row(
                       children: [
                         const SizedBox(width: 16),
-                        Text("items".tr(),
-                            style: const TextStyle(
-                                fontWeight: FontWeight.normal, fontSize: 22)),
+                        Text(
+                          "items".tr(),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.normal,
+                            fontSize: 22,
+                            color: Colors.black, // forced black
+                          ),
+                        ),
                       ],
                     ),
                     const SizedBox(height: 12),
@@ -370,7 +385,9 @@ class _GroceryScreenState extends State<GroceryScreen> {
                                                           product[0],
                                                           style:
                                                               const TextStyle(
-                                                                  fontSize: 16),
+                                                            fontSize: 16,
+                                                            color: Colors.black,
+                                                          ),
                                                         ),
                                                       ),
                                               ),
@@ -383,6 +400,10 @@ class _GroceryScreenState extends State<GroceryScreen> {
                                                     product,
                                                     textAlign: TextAlign.center,
                                                     maxLines: 2,
+                                                    style: const TextStyle(
+                                                      color: Colors
+                                                          .black, // forced black
+                                                    ),
                                                   ),
                                                 ),
                                               ),
@@ -400,9 +421,10 @@ class _GroceryScreenState extends State<GroceryScreen> {
                                           ),
                                           padding: const EdgeInsets.all(4),
                                           child: const Icon(
-                                              Icons.favorite_border,
-                                              color: Colors.green,
-                                              size: 16),
+                                            Icons.favorite_border,
+                                            color: Colors.green,
+                                            size: 16,
+                                          ),
                                         ),
                                       ),
                                     ],

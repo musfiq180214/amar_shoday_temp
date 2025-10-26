@@ -45,7 +45,6 @@ class MyApp extends ConsumerWidget {
       supportedLocales: context.supportedLocales,
       localizationsDelegates: context.localizationDelegates,
       onGenerateRoute: AppRouter.generateRoute,
-      initialRoute: RouteNames.splash,
       navigatorObservers: [_routeObserver],
     );
   }

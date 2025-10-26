@@ -4,7 +4,7 @@ class RouteNames {
   static const String language = '/language';
   static const String suggestArea = '/suggest-area';
   static const String login = '/login';
-  static const String landing = '/landing';
+  static const String signup = '/sign-up';
   static const String landing2 = '/landing2';
   static const String catogories = '/categories';
   static const String favourites = '/favourites';
@@ -13,4 +13,8 @@ class RouteNames {
   static const String searchResults = '/search-results';
   static const String groceryScreen = '/grocery';
   static const String cart = '/cart';
+  static const String forgot1 = '/forgot1';
+  static const String otpverification = '/otp-verification';
+  static const String createNewPass = '/create-new-pass';
+  static const String otpverified = '/otp-verified';
 }

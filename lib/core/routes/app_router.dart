@@ -1,14 +1,18 @@
+import 'package:amar_shoday/features/forgot_passward/create_new_pass.dart';
+import 'package:amar_shoday/features/forgot_passward/forgot1.dart';
+import 'package:amar_shoday/features/forgot_passward/otp_varification.dart';
+import 'package:amar_shoday/features/forgot_passward/otp_varified.dart';
+import 'package:amar_shoday/features/sign_up/presentation/sign_up_screen1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 import 'package:amar_shoday/core/routes/route_names.dart';
-import 'package:amar_shoday/features/home/provider/landing_2_providers.dart';
+import 'package:amar_shoday/features/landing_2/provider/landing_2_providers.dart';
 import 'package:amar_shoday/features/login/presentation/login_screen.dart';
 import 'package:amar_shoday/features/onboarding/presentation/splash_page.dart';
 import 'package:amar_shoday/features/onboarding/presentation/language_page.dart';
 import 'package:amar_shoday/features/onboarding/presentation/suggest_area_page.dart';
-import 'package:amar_shoday/features/landing/presntation/landing.dart';
-import 'package:amar_shoday/features/home/presentation/landing_page_2.dart';
+import 'package:amar_shoday/features/landing_2/presentation/landing_page_2.dart';
 import 'package:amar_shoday/features/categories/presentation/category_screen.dart';
 import 'package:amar_shoday/features/favourites/presentation/favourites_page.dart';
 import 'package:amar_shoday/features/more/presentation/more_page.dart';
@@ -52,6 +56,40 @@ class AppRouter {
           },
         );
 
+      case RouteNames.forgot1:
+        // Placeholder for Forgot Password Screen
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.forgot1),
+          builder: (_) => const Forgot1Page(),
+        );
+
+      case RouteNames.otpverification:
+        // Placeholder for OTP Verification Screen
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.otpverification),
+          builder: (_) => const OtpVerificationPage(),
+        );
+
+      case RouteNames.createNewPass:
+        // Placeholder for Create New Password Screen
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.createNewPass),
+          builder: (_) => const CreateNewPasswordPage(),
+        );
+
+      case RouteNames.otpverified:
+        // Placeholder for Create New Password Screen
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.otpverified),
+          builder: (_) => const OtpVerifiedPage(),
+        );
+
+      case RouteNames.signup:
+        // Placeholder for Signup Screen
+        return MaterialPageRoute(
+            settings: const RouteSettings(name: RouteNames.signup),
+            builder: (_) => const SignUpScreen());
+
       case RouteNames.landing2:
         return MaterialPageRoute(
           settings: const RouteSettings(name: RouteNames.landing2),
@@ -74,12 +112,6 @@ class AppRouter {
         return MaterialPageRoute(
           settings: const RouteSettings(name: RouteNames.more),
           builder: (_) => const MorePage(),
-        );
-
-      case RouteNames.landing:
-        return MaterialPageRoute(
-          settings: const RouteSettings(name: RouteNames.landing),
-          builder: (_) => const Landing(),
         );
 
       case RouteNames.searchResults:

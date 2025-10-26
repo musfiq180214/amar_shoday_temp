@@ -86,7 +86,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
   Widget build(BuildContext context) {
     return Stack(children: [
       Scaffold(
-        // ------------------ AppBar ------------------
+        backgroundColor: Colors.white,
         appBar: PreferredSize(
           preferredSize: const Size.fromHeight(130),
           child: SingleChildScrollView(
@@ -123,9 +123,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                                 fontWeight: FontWeight.bold),
                           ),
                           BellIconButton(
-                            onPressed: () {
-                              // your action here
-                            },
+                            onPressed: () {},
                           ),
                         ],
                       ),
@@ -136,7 +134,6 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
             ),
           ),
         ),
-        // ------------------ Body ------------------
         body: Column(
           children: [
             // Search Bar
@@ -158,8 +155,10 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                       Expanded(
                         child: TextField(
                           controller: searchController,
+                          style: const TextStyle(color: Colors.black),
                           decoration: const InputDecoration(
                             hintText: 'Search by product, brand',
+                            hintStyle: TextStyle(color: Colors.black54),
                             border: InputBorder.none,
                           ),
                           onSubmitted: (_) => _performNewSearch(),
@@ -200,10 +199,14 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                   Text(
                     '"${searchController.text}"',
                     style: const TextStyle(
-                        fontWeight: FontWeight.bold, fontSize: 16),
+                        color: Colors.black,
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16),
                   ),
-                  Text(' ${products.length} products found',
-                      style: const TextStyle(fontSize: 16)),
+                  Text(
+                    ' ${products.length} products found',
+                    style: const TextStyle(color: Colors.black, fontSize: 16),
+                  ),
                 ],
               ),
             ),
@@ -218,7 +221,7 @@ class _SearchResultsPageState extends State<SearchResultsPage> {
                   crossAxisCount: 3,
                   crossAxisSpacing: 8,
                   mainAxisSpacing: 8,
-                  mainAxisExtent: 140, // square
+                  mainAxisExtent: 140,
                 ),
                 itemCount: products.length,
                 itemBuilder: (context, index) {
@@ -260,7 +263,7 @@ class _ProductItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: double.infinity,
-      height: 130, // ✅ fixed height (equal for all)
+      height: 130,
       child: Stack(
         children: [
           Container(
@@ -273,38 +276,32 @@ class _ProductItem extends StatelessWidget {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Image area (fixed)
                 SizedBox(
                   height: 60,
                   width: 60,
                   child: imgPath != null
-                      ? Image.asset(
-                          imgPath!,
-                          fit: BoxFit.contain,
-                        )
+                      ? Image.asset(imgPath!, fit: BoxFit.contain)
                       : const Icon(Icons.image, size: 40, color: Colors.grey),
                 ),
-
                 const SizedBox(height: 6),
-
-                // Product name (will wrap & ellipsis inside fixed space)
                 SizedBox(
-                  height: 32, // ✅ fixed text area
+                  height: 32,
                   child: Center(
                     child: Text(
                       product,
                       textAlign: TextAlign.center,
                       maxLines: 2,
                       overflow: TextOverflow.ellipsis,
-                      style: const TextStyle(fontSize: 13),
+                      style: const TextStyle(
+                        fontSize: 13,
+                        color: Colors.black,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
           ),
-
-          // Discount badge
           if (discount != null)
             Positioned(
               top: 4,
@@ -325,8 +322,6 @@ class _ProductItem extends StatelessWidget {
                 ),
               ),
             ),
-
-          // Favorite icon
           Positioned(
             top: 4,
             right: 4,

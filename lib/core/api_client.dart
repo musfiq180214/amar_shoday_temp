@@ -1,5 +1,5 @@
 import 'package:amar_shoday/core/logger/app_logger.dart';
-import 'package:amar_shoday/features/home/provider/landing_2_providers.dart';
+import 'package:amar_shoday/features/landing_2/provider/landing_2_providers.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

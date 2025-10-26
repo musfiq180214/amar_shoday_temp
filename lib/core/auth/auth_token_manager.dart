@@ -1,26 +1,26 @@
-import 'package:flutter_riverpod/flutter_riverpod.dart';
+// import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-final authTokenManagerProvider =
-    Provider<AuthTokenManager>((ref) => AuthTokenManager(ref));
+// final authTokenManagerProvider =
+//     Provider<AuthTokenManager>((ref) => AuthTokenManager(ref));
 
-class AuthTokenManager {
-  final Ref ref;
+// class AuthTokenManager {
+//   final Ref ref;
 
-  AuthTokenManager(this.ref);
+//   AuthTokenManager(this.ref);
 
-  // Internal StateProvider for token
-  static final _tokenProvider = StateProvider<String?>((ref) => null);
+//   // Internal StateProvider for token
+//   static final _tokenProvider = StateProvider<String?>((ref) => null);
 
-  // Set token (encapsulated)
-  void setToken(String token) {
-    ref.read(_tokenProvider.notifier).state = token;
-  }
+//   // Set token (encapsulated)
+//   void setToken(String token) {
+//     ref.read(_tokenProvider.notifier).state = token;
+//   }
 
-  // Clear token
-  void clearToken() {
-    ref.read(_tokenProvider.notifier).state = null;
-  }
+//   // Clear token
+//   void clearToken() {
+//     ref.read(_tokenProvider.notifier).state = null;
+//   }
 
-  // Get token
-  String? get token => ref.read(_tokenProvider);
-}
+//   // Get token
+//   String? get token => ref.read(_tokenProvider);
+// }

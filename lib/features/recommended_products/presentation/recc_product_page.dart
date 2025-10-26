@@ -196,7 +196,9 @@ class _ReccProductsScreenState extends State<ReccProductsScreen> {
                                                       child: Text(
                                                         product[0],
                                                         style: const TextStyle(
-                                                            fontSize: 16),
+                                                            fontSize: 16,
+                                                            color:
+                                                                Colors.black),
                                                       ),
                                                     ),
                                             ),
@@ -207,6 +209,8 @@ class _ReccProductsScreenState extends State<ReccProductsScreen> {
                                                 fit: BoxFit.scaleDown,
                                                 child: Text(
                                                   product,
+                                                  style: const TextStyle(
+                                                      color: Colors.black),
                                                   textAlign: TextAlign.center,
                                                   maxLines: 2,
                                                 ),
@@ -271,7 +275,7 @@ class _ReccProductsScreenState extends State<ReccProductsScreen> {
           },
         ),
       ),
-      FloatingCart(),
+      const FloatingCart(),
     ]);
   }
 
