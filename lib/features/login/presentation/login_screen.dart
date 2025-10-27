@@ -25,36 +25,36 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.dispose();
   }
 
-  // Future<void> _login() async {
-  //   if (!_formKey.currentState!.validate()) return;
-
-  //   setState(() => _loading = true);
-
-  //   try {
-  //     final apiClient = ref.read(apiClientProvider);
-
-  //     final data = await apiClient.login(
-  //       _phoneController.text.trim(),
-  //       _passwordController.text.trim(),
-  //     );
-
-  //     if (data['token'] != null) {
-  //       // Token saved automatically in ApiClient
-  //       if (!mounted) return;
-  //       Navigator.pushReplacementNamed(context, RouteNames.landing2);
-  //     } else {
-  //       _showError("Invalid login credentials");
-  //     }
-  //   } catch (e) {
-  //     _showError("Login failed. Please try again.");
-  //   } finally {
-  //     if (mounted) setState(() => _loading = false);
-  //   }
-  // }
-
   Future<void> _login() async {
-    Navigator.pushReplacementNamed(context, RouteNames.landing2);
+    if (!_formKey.currentState!.validate()) return;
+
+    setState(() => _loading = true);
+
+    try {
+      final apiClient = ref.read(apiClientProvider);
+
+      final data = await apiClient.login(
+        _phoneController.text.trim(),
+        _passwordController.text.trim(),
+      );
+
+      if (data['token'] != null) {
+        // Token saved automatically in ApiClient
+        if (!mounted) return;
+        Navigator.pushReplacementNamed(context, RouteNames.landing2);
+      } else {
+        _showError("Invalid login credentials");
+      }
+    } catch (e) {
+      _showError("Login failed. Please try again.");
+    } finally {
+      if (mounted) setState(() => _loading = false);
+    }
   }
+
+  // Future<void> _login() async {
+  //   Navigator.pushReplacementNamed(context, RouteNames.landing2);
+  // }
 
   void _showError(String message) {
     ScaffoldMessenger.of(context).showSnackBar(

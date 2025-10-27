@@ -31,6 +31,12 @@ class TopBarL2 extends StatelessWidget {
             ],
           ),
           const LanguageToggleButton(), // global toggle
+
+          IconButton(
+              icon: const Icon(Icons.person, color: Colors.white),
+              onPressed: () {
+                Navigator.pushNamed(context, '/profile');
+              }),
         ],
       ),
     );

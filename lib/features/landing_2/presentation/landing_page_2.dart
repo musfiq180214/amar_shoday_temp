@@ -212,6 +212,10 @@ class _LandingPage2State extends State<LandingPage2>
     }
   }
 
+  void _navigateToProfileScreen() {
+    Navigator.pushNamed(context, RouteNames.profile);
+  }
+
   @override
   Widget build(BuildContext context) {
     final screenSize = MediaQuery.of(context).size;

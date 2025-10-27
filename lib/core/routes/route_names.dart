@@ -17,4 +17,5 @@ class RouteNames {
   static const String otpverification = '/otp-verification';
   static const String createNewPass = '/create-new-pass';
   static const String otpverified = '/otp-verified';
+  static const String profile = '/profile';
 }

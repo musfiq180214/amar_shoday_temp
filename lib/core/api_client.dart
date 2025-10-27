@@ -60,7 +60,7 @@ class ApiClient {
 
   // ---------------- Login API ----------------
   Future<Map<String, dynamic>> login(String phone, String password) async {
-    final res = await _dio.post('/users/login', data: {
+    final res = await _dio.post('/user/login', data: {
       'phone': phone,
       'password': password,
     });
@@ -87,6 +87,11 @@ class ApiClient {
 
   Future<Map<String, dynamic>> getCategoryProducts(String slug) async {
     final res = await _dio.get('/user/categories/$slug');
+    return res.data;
+  }
+
+  Future<Map<String, dynamic>> getProfileInfo() async {
+    final res = await _dio.get('/user/profile');
     return res.data;
   }
 

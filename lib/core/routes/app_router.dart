@@ -2,6 +2,7 @@ import 'package:amar_shoday/features/forgot_passward/create_new_pass.dart';
 import 'package:amar_shoday/features/forgot_passward/forgot1.dart';
 import 'package:amar_shoday/features/forgot_passward/otp_varification.dart';
 import 'package:amar_shoday/features/forgot_passward/otp_varified.dart';
+import 'package:amar_shoday/features/profile/presentation/profile_screen.dart';
 import 'package:amar_shoday/features/sign_up/presentation/sign_up_screen1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -138,6 +139,12 @@ class AppRouter {
         return MaterialPageRoute(
           settings: const RouteSettings(name: RouteNames.cart),
           builder: (_) => CartScreen(),
+        );
+
+      case RouteNames.profile:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.profile),
+          builder: (_) => const ProfileScreen(),
         );
 
       default:
