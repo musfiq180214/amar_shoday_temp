@@ -2,26 +2,74 @@ import 'package:amar_shoday/core/constants/colors.dart';
 import 'package:amar_shoday/features/profile/domain/user_model.dart';
 import 'package:amar_shoday/features/profile/providers/profile_provider.dart';
 import 'package:amar_shoday/widgets/bell_icon.dart';
+import 'package:amar_shoday/widgets/bottom_navbar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class ProfileScreen extends ConsumerWidget {
+class ProfileScreen extends ConsumerStatefulWidget {
   const ProfileScreen({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends ConsumerState<ProfileScreen> {
+  int _currentIndex = 3;
+
+  @override
+  Widget build(BuildContext context) {
     final profileAsync = ref.watch(profileProvider);
 
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
-      body: SafeArea(
-        child: RefreshIndicator(
-          onRefresh: () async => ref.refresh(profileProvider.future),
-          child: profileAsync.when(
-            data: (user) => _ProfileView(user: user),
-            loading: () => const Center(child: CircularProgressIndicator()),
-            error: (e, _) => Center(child: Text("Error: ${e.toString()}")),
+      // backgroundColor: Colors.grey.shade100,
+
+      appBar: AppBar(
+        backgroundColor: Colors.white,
+        title: const Text(
+          "Profile",
+          style: TextStyle(color: Colors.black),
+        ),
+        centerTitle: true,
+        actions: [
+          IconButton(
+            onPressed: () {
+              // Add your onPressed action here
+            },
+            icon: Image.asset(
+              'assets/bell_icon.png',
+              width: 50,
+              height: 50,
+            ),
           ),
+          const SizedBox(width: 12),
+        ],
+      ),
+      body: Container(
+        color: Colors.yellow[100],
+        child: SafeArea(
+          child: RefreshIndicator(
+            onRefresh: () async => ref.refresh(profileProvider.future),
+            child: profileAsync.when(
+              data: (user) => _ProfileView(user: user),
+              loading: () =>
+                  const Center(child: Text("No profile data found.")),
+              error: (e, _) => Center(child: Text("Error: ${e.toString()}")),
+            ),
+          ),
+        ),
+      ),
+      bottomNavigationBar: ClipRRect(
+        borderRadius: const BorderRadius.only(
+          topLeft: Radius.circular(24),
+          topRight: Radius.circular(24),
+        ),
+        child: CustomBottomNavBar(
+          currentIndex: _currentIndex,
+          onTap: (index) {
+            if (index != _currentIndex) {
+              setState(() => _currentIndex = index);
+            }
+          },
         ),
       ),
     );
@@ -37,38 +85,71 @@ class _ProfileView extends StatelessWidget {
     return ListView(
       padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       children: [
+        SizedBox(height: 8),
         // 🧭 Top Bar
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            IconButton(
-              onPressed: () => Navigator.pop(context),
-              icon: const Icon(Icons.arrow_back_ios_new_rounded),
-            ),
-            Text(
-              "Profile",
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: AppColors.primaryColor,
-              ),
-            ),
-            const BellIconButton(),
-          ],
-        ),
+        // Container(
+        //   color: Colors.white,
+        //   child: Row(
+        //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        //     children: [
+        //       IconButton(
+        //         onPressed: () => Navigator.pop(context),
+        //         icon: const Icon(Icons.arrow_back_ios_new_rounded),
+        //       ),
+        //       Text(
+        //         "Profile",
+        //         style: TextStyle(
+        //           fontSize: 20,
+        //           fontWeight: FontWeight.bold,
+        //           color: AppColors.primaryColor,
+        //         ),
+        //       ),
+        //       const BellIconButton(),
+        //     ],
+        //   ),
+        // ),
 
         const SizedBox(height: 12),
 
         // 👤 Profile Image
         Center(
-          child: CircleAvatar(
-            radius: 50,
-            backgroundColor: Colors.blue.shade100,
-            child: const Icon(
-              Icons.person,
-              size: 60,
-              color: Colors.blueGrey,
-            ),
+          child: Stack(
+            clipBehavior: Clip.none,
+            children: [
+              // --- Main square profile image ---
+              Container(
+                width: 60,
+                height: 60,
+                decoration: BoxDecoration(
+                  color: Colors.blue.shade100,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                child: const Icon(
+                  Icons.person,
+                  size: 40,
+                  color: Colors.blueGrey,
+                ),
+              ),
+
+              // --- Asset icon at bottom-left corner ---
+              Positioned(
+                bottom: -5,
+                left: 40,
+                child: Container(
+                  width: 24,
+                  height: 24,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    border: Border.all(color: Colors.grey.shade300, width: 1),
+                  ),
+                  child: Image.asset(
+                    'assets/camera.png',
+                    fit: BoxFit.contain,
+                  ),
+                ),
+              ),
+            ],
           ),
         ),
 
@@ -116,17 +197,20 @@ class _ProfileView extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              _infoRow("Name", user.name),
+              _infoRowP("Name", user.name),
               const SizedBox(height: 8),
-              _infoRow("Phone Number", user.phone),
+              const Divider(thickness: 1, color: Colors.grey),
+              _infoRowP("Phone Number", user.phone),
               const SizedBox(height: 8),
-              _infoRow("Email", user.email),
-              const Divider(height: 24),
+              const Divider(thickness: 1, color: Colors.grey),
+              _infoRowP("Email", user.email),
+              const Divider(thickness: 1, color: Colors.grey),
               Row(
                 children: [
-                  Expanded(child: _infoRow("DOB", user.dob ?? "-")),
+                  Expanded(
+                      child: _infoRowP("DOB", user.dob ?? "19 March 2000")),
                   const SizedBox(width: 12),
-                  Expanded(child: _infoRow("Gender", user.gender ?? "-")),
+                  Expanded(child: _infoRowP("Gender", user.gender ?? "Male")),
                 ],
               ),
             ],
@@ -184,7 +268,8 @@ class _ProfileView extends StatelessWidget {
                   ),
                   const SizedBox(height: 6),
                   Text(
-                    addr.details ?? "No address details provided",
+                    addr.details ??
+                        "H-02, R-10, Bosila Garden City, Bosila, Mohammadpur, Dhaka.",
                     style: const TextStyle(color: Colors.black87),
                   ),
                 ],
@@ -195,13 +280,42 @@ class _ProfileView extends StatelessWidget {
         const SizedBox(height: 24),
 
         // 👨‍👩‍👧 Recipient Section
-        const Text(
-          "Recipient",
-          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        const Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Text(
+              "Recipient",
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Icon(Icons.edit, color: Colors.blue, size: 20),
+          ],
         ),
         const SizedBox(height: 12),
         if (user.recipient == null || user.recipient!.name.isEmpty)
-          const Text("No recipient information added.")
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(12),
+              boxShadow: const [
+                BoxShadow(
+                  color: Colors.black,
+                  blurRadius: 5,
+                  offset: Offset(0, 2),
+                )
+              ],
+            ),
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                _infoRowR("Relation", "Wife"),
+                const SizedBox(height: 8),
+                _infoRowR("Name", "Nusrat Fariya"),
+                const SizedBox(height: 8),
+                _infoRowR("Phone", "01755479660"),
+              ],
+            ),
+          )
         else
           Container(
             decoration: BoxDecoration(
@@ -219,11 +333,11 @@ class _ProfileView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _infoRow("Relation", user.recipient!.relation),
+                _infoRowP("Relation", user.recipient!.relation),
                 const SizedBox(height: 8),
-                _infoRow("Name", user.recipient!.name),
+                _infoRowP("Name", user.recipient!.name),
                 const SizedBox(height: 8),
-                _infoRow("Phone", user.recipient!.phone),
+                _infoRowP("Phone", user.recipient!.phone),
               ],
             ),
           ),
@@ -233,21 +347,39 @@ class _ProfileView extends StatelessWidget {
     );
   }
 
-  Widget _infoRow(String label, String value) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  Widget _infoRowP(String label, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
           label,
-          style: TextStyle(
-            color: Colors.grey.shade700,
-            fontSize: 14,
+          style: const TextStyle(
+            color: Colors.grey,
+            fontWeight: FontWeight.w400,
+            fontSize: 12,
           ),
         ),
         Text(
           value,
-          style: const TextStyle(
-            fontWeight: FontWeight.w600,
+          style: TextStyle(
+            color: label == "Relation" ? Colors.grey : Colors.black,
+            fontWeight: FontWeight.w500,
+            fontSize: 14,
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _infoRowR(String label, String value) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Text(
+          value,
+          style: TextStyle(
+            color: label == "Relation" ? Colors.grey : Colors.black,
+            fontWeight: FontWeight.w500,
             fontSize: 14,
           ),
         ),
