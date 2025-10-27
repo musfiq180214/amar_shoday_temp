@@ -95,7 +95,33 @@ class ApiClient {
     return res.data;
   }
 
-  // Optional: logout method to clear token
+  Future<Map<String, dynamic>> updateProfile({
+    String? name,
+    String? email,
+    String? dob, // format: "dd-MM-yyyy"
+    String? gender, // e.g., "male", "female"
+  }) async {
+    final Map<String, dynamic> data = {};
+
+    if (name != null) data['name'] = name;
+    if (email != null) data['email'] = email;
+    if (dob != null) data['dob'] = dob;
+    if (gender != null) {
+      if (gender == 'Female') {
+        data['gender'] = 1;
+      } else {
+        data['gender'] = 0;
+      }
+    }
+
+    final res = await _dio.put('/user/profile', data: data);
+
+    _logger.i("✏️ [UPDATE PROFILE] Body: $data");
+    _logger.i("✏️ [UPDATE PROFILE] Response: ${res.data}");
+
+    return res.data;
+  }
+
   void logout() {
     _ref.read(authTokenProvider.notifier).state = null;
   }

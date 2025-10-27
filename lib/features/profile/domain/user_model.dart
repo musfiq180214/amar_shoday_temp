@@ -3,16 +3,10 @@ class AddressModel {
   final String title;
   final String? details;
 
-  AddressModel({
-    required this.id,
-    required this.title,
-    this.details,
-  });
+  AddressModel({required this.id, required this.title, this.details});
 
   factory AddressModel.fromJson(Map<String, dynamic>? json) {
-    if (json == null) {
-      return AddressModel(id: 0, title: '', details: null);
-    }
+    if (json == null) return AddressModel(id: 0, title: '', details: null);
     return AddressModel(
       id: json['id'] ?? 0,
       title: json['title'] ?? '',
@@ -26,16 +20,11 @@ class RecipientModel {
   final String name;
   final String phone;
 
-  RecipientModel({
-    required this.relation,
-    required this.name,
-    required this.phone,
-  });
+  RecipientModel(
+      {required this.relation, required this.name, required this.phone});
 
   factory RecipientModel.fromJson(Map<String, dynamic>? json) {
-    if (json == null) {
-      return RecipientModel(relation: '', name: '', phone: '');
-    }
+    if (json == null) return RecipientModel(relation: '', name: '', phone: '');
     return RecipientModel(
       relation: json['relation'] ?? '',
       name: json['name'] ?? '',

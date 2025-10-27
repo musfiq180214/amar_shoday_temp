@@ -13,7 +13,21 @@ class ProfileRepository {
 
   Future<UserModel> fetchProfile() async {
     final response = await _apiClient.getProfileInfo();
-    final userData = response['user'];
-    return UserModel.fromJson(userData);
+    return UserModel.fromJson(response['user']);
+  }
+
+  Future<UserModel> updateProfile({
+    String? name,
+    String? email,
+    String? dob,
+    String? gender,
+  }) async {
+    final res = await _apiClient.updateProfile(
+      name: name,
+      email: email,
+      dob: dob,
+      gender: gender,
+    );
+    return UserModel.fromJson(res['user']);
   }
 }

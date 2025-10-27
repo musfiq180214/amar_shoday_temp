@@ -14,3 +14,8 @@ final profileProvider = FutureProvider<UserModel>((ref) async {
   final useCase = ref.read(getProfileUseCaseProvider);
   return await useCase();
 });
+
+final updateProfileUseCaseProvider = Provider<UpdateProfileUseCase>((ref) {
+  final repo = ref.read(profileRepositoryProvider);
+  return UpdateProfileUseCase(repo);
+});
