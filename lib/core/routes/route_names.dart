@@ -6,7 +6,7 @@ class RouteNames {
   static const String login = '/login';
   static const String signup = '/sign-up';
   static const String landing2 = '/landing2';
-  static const String catogories = '/categories';
+  static const String AllCategories = '/categories';
   static const String favourites = '/favourites';
   static const String more = '/more';
   static const String reccProducts = '/recc-products';
@@ -18,4 +18,6 @@ class RouteNames {
   static const String createNewPass = '/create-new-pass';
   static const String otpverified = '/otp-verified';
   static const String profile = '/profile';
+  static const String order = '/order';
+  static const String productPage = '/product-page';
 }

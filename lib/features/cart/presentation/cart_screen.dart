@@ -1,4 +1,6 @@
 import 'package:amar_shoday/core/constants/colors.dart';
+import 'package:amar_shoday/core/routes/route_names.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 
 class CartScreen extends StatefulWidget {
@@ -71,13 +73,19 @@ class _CartScreenState extends State<CartScreen> {
         backgroundColor: Colors.white,
         centerTitle: false,
         automaticallyImplyLeading: false,
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back_ios_new, color: Colors.black),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
         title: Row(
           children: [
             Image.asset('assets/cart.png', width: 28, height: 28),
             const SizedBox(width: 10),
-            const Text(
-              'Cart',
-              style: TextStyle(
+            Text(
+              'cart'.tr(),
+              style: const TextStyle(
                 color: Colors.black,
                 fontSize: 20,
                 fontWeight: FontWeight.w600,
@@ -377,14 +385,15 @@ class _CartScreenState extends State<CartScreen> {
               onPressed: cartItems.isEmpty
                   ? null
                   : () {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text(
-                            'Continuing to checkout... (৳ ${total.toStringAsFixed(2)})',
-                            style: const TextStyle(color: Colors.black),
-                          ),
-                        ),
-                      );
+                      Navigator.pushReplacementNamed(context, RouteNames.order);
+                      // ScaffoldMessenger.of(context).showSnackBar(
+                      //   SnackBar(
+                      //     content: Text(
+                      //       'Continuing to checkout... (৳ ${total.toStringAsFixed(2)})',
+                      //       style: const TextStyle(color: Colors.black),
+                      //     ),
+                      //   ),
+                      // );
                     },
               style: ElevatedButton.styleFrom(
                 backgroundColor: Colors.green,

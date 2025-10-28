@@ -31,7 +31,7 @@ class CustomBottomNavBar extends StatelessWidget {
               Navigator.pushNamed(context, RouteNames.landing2);
               break;
             case 1:
-              Navigator.pushNamed(context, RouteNames.catogories);
+              Navigator.pushNamed(context, RouteNames.AllCategories);
               break;
             case 2:
               Navigator.pushNamed(context, RouteNames.favourites);

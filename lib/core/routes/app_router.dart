@@ -1,7 +1,9 @@
+import 'package:amar_shoday/features/category/presentation/category_screen.dart';
 import 'package:amar_shoday/features/forgot_passward/create_new_pass.dart';
 import 'package:amar_shoday/features/forgot_passward/forgot1.dart';
 import 'package:amar_shoday/features/forgot_passward/otp_varification.dart';
 import 'package:amar_shoday/features/forgot_passward/otp_varified.dart';
+import 'package:amar_shoday/features/order/order_page.dart';
 import 'package:amar_shoday/features/profile/presentation/profile_screen.dart';
 import 'package:amar_shoday/features/sign_up/presentation/sign_up_screen1.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +16,6 @@ import 'package:amar_shoday/features/onboarding/presentation/splash_page.dart';
 import 'package:amar_shoday/features/onboarding/presentation/language_page.dart';
 import 'package:amar_shoday/features/onboarding/presentation/suggest_area_page.dart';
 import 'package:amar_shoday/features/landing_2/presentation/landing_page_2.dart';
-import 'package:amar_shoday/features/categories/presentation/category_screen.dart';
 import 'package:amar_shoday/features/favourites/presentation/favourites_page.dart';
 import 'package:amar_shoday/features/more/presentation/more_page.dart';
 import 'package:amar_shoday/features/recommended_products/presentation/recc_product_page.dart';
@@ -97,12 +98,6 @@ class AppRouter {
           builder: (_) => const LandingPage2(),
         );
 
-      case RouteNames.catogories:
-        return MaterialPageRoute(
-          settings: const RouteSettings(name: RouteNames.catogories),
-          builder: (_) => const CategoryScreen(),
-        );
-
       case RouteNames.favourites:
         return MaterialPageRoute(
           settings: const RouteSettings(name: RouteNames.favourites),
@@ -145,6 +140,18 @@ class AppRouter {
         return MaterialPageRoute(
           settings: const RouteSettings(name: RouteNames.profile),
           builder: (_) => const ProfileScreen(),
+        );
+
+      case RouteNames.order:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.order),
+          builder: (_) => const OrderPage(),
+        );
+
+      case RouteNames.AllCategories:
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.AllCategories),
+          builder: (_) => const AllCategoriesScreen(),
         );
 
       default:

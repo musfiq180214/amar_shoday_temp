@@ -37,14 +37,14 @@ class _LandingPage2State extends State<LandingPage2>
     "Medicine"
   ];
 
-  final Map<String, String> categoryRoutes = const {
-    "Groceries": RouteNames.groceryScreen,
-    // "Meat": RouteNames.meat,
-    // "Vegetable": RouteNames.vegetable,
-    // "Dairy": RouteNames.dairy,
-    // "Cosmetics": RouteNames.cosmetics,
-    // "Medicine": RouteNames.medicine,
-  };
+  // final Map<String, String> categoryRoutes = const {
+  //   "Groceries": RouteNames.groceryScreen,
+  //   // "Meat": RouteNames.meat,
+  //   // "Vegetable": RouteNames.vegetable,
+  //   // "Dairy": RouteNames.dairy,
+  //   // "Cosmetics": RouteNames.cosmetics,
+  //   // "Medicine": RouteNames.medicine,
+  // };
 
   final recommended = const [
     "Marium Date",
@@ -471,17 +471,28 @@ class _LandingPage2State extends State<LandingPage2>
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text("categories".tr(),
-                  style: const TextStyle(
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 18)),
-              Text("view_all".tr(),
+              Text(
+                "categories".tr(),
+                style: const TextStyle(
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  // Navigate to AllCategoriesScreen using route name
+                  Navigator.pushNamed(context, RouteNames.AllCategories);
+                },
+                child: Text(
+                  "view_all".tr(),
                   style: const TextStyle(
                     color: Colors.black,
                     decoration: TextDecoration.underline,
                     decorationColor: Colors.black,
-                  ))
+                  ),
+                ),
+              ),
             ],
           ),
         ),
