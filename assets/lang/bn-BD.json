@@ -9,10 +9,12 @@
     "top_sales": "শীর্ষ বিক্রয়",
     "home": "হোম",
     "categories": "বিভাগসমূহ",
-    "sub_categories": "বিভাগসমূহ",
+    "sub_categories": "উপ-বিভাগসমূহ",
     "favourite": "প্রিয়",
     "more": "আরো",
     "search": "খুঁজুন",
     "search_result": "অনুসন্ধানের ফলাফল",
-    "items": "উপাদানসমুহ"
+    "items": "উপাদানসমুহ",
+    "cart": "কার্ট",
+    "all_categories": "সমস্ত বিভাগ"
 }
