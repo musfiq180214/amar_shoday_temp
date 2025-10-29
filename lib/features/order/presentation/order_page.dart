@@ -43,7 +43,7 @@ class OrderPage extends StatelessWidget {
                       color: AppColors.primaryColor,
                     ),
                   ),
-                  const Spacer(),
+                  const SizedBox(width: 100),
                   BellIconButton(onPressed: () {}),
                 ],
               ),

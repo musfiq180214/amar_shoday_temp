@@ -1,5 +1,6 @@
 import 'package:amar_shoday/core/constants/colors.dart';
 import 'package:amar_shoday/features/order/domain/order_model.dart';
+import 'package:amar_shoday/core/routes/route_names.dart';
 import 'package:flutter/material.dart';
 
 class OrderCard extends StatelessWidget {
@@ -18,8 +19,7 @@ class OrderCard extends StatelessWidget {
       ),
       padding: const EdgeInsets.all(12),
       child: Row(
-        crossAxisAlignment:
-            CrossAxisAlignment.center, // ✅ Center image vertically
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           // 🖼️ Image
           CircleAvatar(
@@ -29,12 +29,12 @@ class OrderCard extends StatelessWidget {
               width: 60,
               height: 60,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(8),
-                  image: DecorationImage(
-                    image: AssetImage(order.image ?? "none"),
-                    // fit: BoxFit.contain),
-                    fit: BoxFit.scaleDown,
-                  )),
+                borderRadius: BorderRadius.circular(8),
+                image: DecorationImage(
+                  image: AssetImage(order.image ?? "none"),
+                  fit: BoxFit.scaleDown,
+                ),
+              ),
             ),
           ),
           const SizedBox(width: 12),
@@ -54,7 +54,6 @@ class OrderCard extends StatelessWidget {
                     const SizedBox(width: 60),
                     Row(
                       children: [
-                        // ✅ Show clock icon only if queue exists (i.e., Active Order)
                         if (order.queue != null) ...[
                           Icon(
                             Icons.access_time,
@@ -70,7 +69,6 @@ class OrderCard extends StatelessWidget {
                 ),
 
                 const SizedBox(height: 6),
-
                 const Divider(color: Colors.grey, thickness: 1),
 
                 // Row 2
@@ -113,17 +111,27 @@ class OrderCard extends StatelessWidget {
                       ),
                       const SizedBox(width: 55),
                     ] else
-                      const Spacer(), // keep layout balanced if no queue
+                      const Spacer(),
 
-                    Text(
-                      "View Details",
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.green.shade700,
-                        decoration: TextDecoration.underline,
-                        decorationColor: Colors.green.shade700,
-                        decorationThickness: 1.5,
+                    // ✅ Make View Details tappable
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(
+                          context,
+                          RouteNames.orderDetails,
+                          arguments: {'orderId': order.id},
+                        );
+                      },
+                      child: Text(
+                        "View Details",
+                        style: TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.green.shade700,
+                          decoration: TextDecoration.underline,
+                          decorationColor: Colors.green.shade700,
+                          decorationThickness: 1.5,
+                        ),
                       ),
                     ),
                   ],
