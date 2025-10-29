@@ -79,7 +79,8 @@ class _AllCategoriesScreenState extends ConsumerState<AllCategoriesScreen> {
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
-                              content: Text('Category slug is missing'),
+                              content:
+                                  Text('No Sub Category or Products available'),
                             ),
                           );
                         }

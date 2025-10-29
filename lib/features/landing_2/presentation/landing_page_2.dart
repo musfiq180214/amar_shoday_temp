@@ -230,7 +230,7 @@ class _LandingPage2State extends State<LandingPage2>
               child: Column(
                 children: [
                   const SizedBox(height: 25),
-                  const TopBarL2(),
+                  const TopBarCommon(),
                   Stack(
                     children: [
                       Container(

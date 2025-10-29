@@ -1,17 +1,17 @@
 class OrderModel {
   final String id;
-  final String image;
   final int items;
   final int price;
-  final int queue;
+  final int? queue; // ✅ nullable for previous orders
   final String time;
+  final String? image; // ✅ new optional image field
 
   OrderModel({
     required this.id,
-    required this.image,
     required this.items,
     required this.price,
-    required this.queue,
+    this.queue,
     required this.time,
+    this.image, // ✅ optional image
   });
 }

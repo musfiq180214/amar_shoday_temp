@@ -5,10 +5,11 @@ import 'package:amar_shoday/features/theme/theme_toggle_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class TopBarL2 extends ConsumerWidget {
+class TopBarCommon extends ConsumerWidget {
   final String location;
 
-  const TopBarL2({Key? key, this.location = "Bosila, Dhaka"}) : super(key: key);
+  const TopBarCommon({Key? key, this.location = "Bosila, Dhaka"})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
