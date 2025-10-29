@@ -1,7 +1,7 @@
+import 'package:amar_shoday/core/constants/colors.dart';
 import 'package:amar_shoday/widgets/bell_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:amar_shoday/widgets/top_bar.dart';
-import 'package:amar_shoday/core/constants/colors.dart';
 
 class OrderDetailsPage extends StatelessWidget {
   final String orderId;
@@ -10,7 +10,7 @@ class OrderDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.amber[100],
+      backgroundColor: Colors.white, // ✅ white background
       appBar: PreferredSize(
         preferredSize: const Size.fromHeight(110),
         child: Column(
@@ -33,7 +33,7 @@ class OrderDetailsPage extends StatelessWidget {
                     style: TextStyle(
                       fontSize: 20,
                       fontWeight: FontWeight.w600,
-                      color: AppColors.primaryColor,
+                      color: AppColors.primaryColor, // ✅ all text black
                     ),
                   ),
                   const Spacer(),
@@ -52,18 +52,19 @@ class OrderDetailsPage extends StatelessWidget {
             elevation: 4,
             shape:
                 RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            color: Colors.white, // ✅ white card background
             child: Padding(
               padding: const EdgeInsets.all(16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  // Order ID
                   Container(
                     height: 40,
                     width: 180,
                     padding: const EdgeInsets.all(8),
                     decoration: BoxDecoration(
-                      color: AppColors.primaryColor,
+                      color: AppColors
+                          .primaryColor, // optional: keep primary color if needed
                       borderRadius: BorderRadius.circular(12),
                     ),
                     child: Center(
@@ -77,53 +78,44 @@ class OrderDetailsPage extends StatelessWidget {
                       ),
                     ),
                   ),
-
                   const SizedBox(height: 20),
-
                   // Status and Date
-                  Row(
+                  const Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
                         "Completed",
                         style: TextStyle(
                           fontSize: 16,
-                          color: AppColors.primaryColor,
+                          color: Colors.black,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Text(
+                      Text(
                         "25 Feb 2025",
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],
                   ),
                   const SizedBox(height: 10),
-
                   // Customer and Time
-                  Row(
+                  const Row(
                     children: [
-                      Image.asset(
-                        "assets/order1.png",
-                        height: 20,
-                        width: 20,
-                      ),
-                      const SizedBox(width: 8),
-                      const Text(
+                      Icon(Icons.person, size: 20),
+                      SizedBox(width: 8),
+                      Text(
                         "Mohammad Rasel",
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
-                      const Spacer(),
-                      const Text(
+                      Spacer(),
+                      Text(
                         "10.15 am",
                         style: TextStyle(fontSize: 16, color: Colors.black),
                       ),
                     ],
                   ),
-
                   const SizedBox(height: 16),
-
-                  // Store 1
+                  // Stores
                   StoreDetail(
                     storeName: "Bismillah Store",
                     items: [
@@ -144,10 +136,7 @@ class OrderDetailsPage extends StatelessWidget {
                     ],
                     discountPercent: 10,
                   ),
-
                   const SizedBox(height: 16),
-
-                  // Store 2
                   StoreDetail(
                     storeName: "Rahim Store",
                     items: [
@@ -175,10 +164,7 @@ class OrderDetailsPage extends StatelessWidget {
                     ],
                     discountPercent: 5,
                   ),
-
                   const SizedBox(height: 16),
-
-                  // Summary
                   const SummaryRow(
                       title: "Total Price",
                       subtitle: "excluding discount",
@@ -225,7 +211,7 @@ class StoreDetail extends StatelessWidget {
         items.fold(0, (sum, item) => sum + (item.price * item.quantity));
 
     return Card(
-      color: Colors.amber[50],
+      color: Colors.amber[100], // ✅ white background
       elevation: 2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       child: Padding(
@@ -243,49 +229,38 @@ class StoreDetail extends StatelessWidget {
                     width: 30,
                     height: 30,
                   ),
-                  onPressed: () {
-                    // your action
-                  },
+                  onPressed: () {},
                 ),
-                // const SizedBox(width: 0.5),
                 Text(
                   storeName,
                   style: const TextStyle(
                     fontSize: 13,
                     fontWeight: FontWeight.bold,
+                    color: Colors.black, // ✅ forced black
                   ),
                 ),
-
                 CircleAvatar(
                   radius: 18,
-                  backgroundColor: AppColors.buttonColor,
+                  backgroundColor: Colors.grey[200],
                   child: IconButton(
-                    //padding: EdgeInsets.zero, // remove default padding
-                    // constraints:
-                    //     const BoxConstraints(), // remove default constraints
                     icon: Image.asset(
                       "assets/green_favourite.png",
                       width: 30,
                       height: 30,
                     ),
-                    onPressed: () {
-                      // your action
-                    },
+                    onPressed: () {},
                   ),
                 ),
-
                 TextButton(
                   onPressed: () {},
                   child: const Text(
                     "Review",
                     style: TextStyle(
-                      color: Colors.green,
+                      color: Colors.black, // ✅ forced black
                       fontSize: 14,
-                      decoration: TextDecoration.underline, // ✅ Underline
-                      decorationColor:
-                          Colors.green, // optional: same color as text
-                      decorationThickness:
-                          1.5, // optional: thickness of underline
+                      decoration: TextDecoration.underline,
+                      decorationColor: Colors.black,
+                      decorationThickness: 1.5,
                     ),
                   ),
                 ),
@@ -296,15 +271,12 @@ class StoreDetail extends StatelessWidget {
             // Header row
             LayoutBuilder(
               builder: (context, constraints) {
-                // Estimate width per column to decide font size dynamically
-                double columnWidth =
-                    constraints.maxWidth / 10; // total flex = 4+2+2+2 = 10
-                double baseFontSize =
-                    columnWidth < 60 ? 10 : 13; // adjust threshold as needed
+                double columnWidth = constraints.maxWidth / 10;
+                double baseFontSize = columnWidth < 60 ? 10 : 13;
 
                 return Container(
                   decoration: BoxDecoration(
-                    color: Colors.amber[100],
+                    color: Colors.white, // ✅ white background
                     borderRadius: BorderRadius.circular(6),
                   ),
                   padding: const EdgeInsets.symmetric(
@@ -319,6 +291,7 @@ class StoreDetail extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: baseFontSize,
+                            color: Colors.black, // ✅ black
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -331,6 +304,7 @@ class StoreDetail extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: baseFontSize,
+                            color: Colors.black, // ✅ black
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -343,6 +317,7 @@ class StoreDetail extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: baseFontSize,
+                            color: Colors.black, // ✅ black
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -355,6 +330,7 @@ class StoreDetail extends StatelessWidget {
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             fontSize: baseFontSize,
+                            color: Colors.black, // ✅ black
                           ),
                           overflow: TextOverflow.ellipsis,
                         ),
@@ -374,7 +350,6 @@ class StoreDetail extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    // 🛍️ Item + brand/unit stacked on left
                     Expanded(
                       flex: 4,
                       child: Column(
@@ -385,6 +360,7 @@ class StoreDetail extends StatelessWidget {
                             style: const TextStyle(
                               fontSize: 13,
                               fontWeight: FontWeight.w600,
+                              color: Colors.black, // ✅ black
                             ),
                           ),
                           const SizedBox(height: 2),
@@ -392,14 +368,12 @@ class StoreDetail extends StatelessWidget {
                             "${item.brand} | ${item.unit}",
                             style: const TextStyle(
                               fontSize: 12,
-                              color: Colors.black54,
+                              color: Colors.black, // ✅ black
                             ),
                           ),
                         ],
                       ),
                     ),
-
-                    // 💰 Unit Price (fit in one line, auto-shrink if long)
                     Expanded(
                       flex: 2,
                       child: Padding(
@@ -409,13 +383,14 @@ class StoreDetail extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "৳ ${item.price.toStringAsFixed(2)}",
-                            style: const TextStyle(fontSize: 12),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.black, // ✅ black
+                            ),
                           ),
                         ),
                       ),
                     ),
-
-                    // 🔢 Quantity (centered horizontally)
                     Expanded(
                       flex: 2,
                       child: Padding(
@@ -423,13 +398,14 @@ class StoreDetail extends StatelessWidget {
                         child: Center(
                           child: Text(
                             "${item.quantity}",
-                            style: const TextStyle(fontSize: 12),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.black, // ✅ black
+                            ),
                           ),
                         ),
                       ),
                     ),
-
-                    // 💵 Total (fit in one line, auto-shrink if long)
                     Expanded(
                       flex: 2,
                       child: Padding(
@@ -439,7 +415,10 @@ class StoreDetail extends StatelessWidget {
                           alignment: Alignment.centerLeft,
                           child: Text(
                             "৳  ${(item.price * item.quantity).toStringAsFixed(2)}",
-                            style: const TextStyle(fontSize: 12),
+                            style: const TextStyle(
+                              fontSize: 12,
+                              color: Colors.black, // ✅ black
+                            ),
                           ),
                         ),
                       ),
@@ -449,7 +428,7 @@ class StoreDetail extends StatelessWidget {
               ),
             ),
 
-            const Divider(thickness: 1, height: 18),
+            const Divider(thickness: 1, height: 18, color: Colors.black54),
 
             // Discount row
             Row(
@@ -457,11 +436,11 @@ class StoreDetail extends StatelessWidget {
               children: [
                 Text(
                   "Total Discount ($discountPercent%)",
-                  style: const TextStyle(fontSize: 13),
+                  style: const TextStyle(fontSize: 13, color: Colors.black),
                 ),
                 Text(
                   "৳  ${(totalAmount * discountPercent / 100).toStringAsFixed(2)}",
-                  style: const TextStyle(fontSize: 13),
+                  style: const TextStyle(fontSize: 13, color: Colors.black),
                 ),
               ],
             ),
@@ -473,12 +452,17 @@ class StoreDetail extends StatelessWidget {
               children: [
                 const Text(
                   "Sub Total",
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 13),
+                  style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: Colors.black),
                 ),
                 Text(
                   "৳  ${(totalAmount - (totalAmount * discountPercent / 100)).toStringAsFixed(2)}",
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 13),
+                      fontWeight: FontWeight.bold,
+                      fontSize: 13,
+                      color: Colors.black),
                 ),
               ],
             ),
@@ -511,12 +495,9 @@ class StoreItem {
 /// ========================
 /// Summary Row Widget
 /// ========================
-/// ========================
-/// Summary Row Widget (with optional subtitle)
-/// ========================
 class SummaryRow extends StatelessWidget {
   final String title;
-  final String? subtitle; // optional subtitle
+  final String? subtitle;
   final double amount;
   final bool isBold;
 
@@ -533,7 +514,7 @@ class SummaryRow extends StatelessWidget {
     final textStyle = TextStyle(
       fontSize: 14,
       fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-      color: Colors.black,
+      color: Colors.black, // ✅ black
     );
 
     return Padding(
@@ -541,7 +522,6 @@ class SummaryRow extends StatelessWidget {
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // 📝 Title + optional subtitle (stacked)
           Expanded(
             flex: 4,
             child: Column(
@@ -560,7 +540,7 @@ class SummaryRow extends StatelessWidget {
                     "(${subtitle!})",
                     style: const TextStyle(
                       fontSize: 13,
-                      color: Colors.black54,
+                      color: Colors.black,
                       fontStyle: FontStyle.italic,
                     ),
                     softWrap: true,
@@ -571,10 +551,7 @@ class SummaryRow extends StatelessWidget {
               ],
             ),
           ),
-
           const SizedBox(width: 8),
-
-          // 💰 Amount (always single line, auto-fit if long)
           FittedBox(
             fit: BoxFit.scaleDown,
             alignment: Alignment.centerRight,

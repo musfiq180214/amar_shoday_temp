@@ -51,7 +51,10 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
               children: [
                 const Text(
                   "Filter",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                  style: TextStyle(
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black),
                 ),
                 GestureDetector(
                   onTap: () => Navigator.pop(context),
@@ -78,13 +81,16 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         const Text(
                           "Order Number",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                         const SizedBox(height: 8),
                         TextField(
                           controller: orderController,
                           decoration: const InputDecoration(
                             hintText: "Input Order number",
+                            hintStyle: TextStyle(color: Colors.black),
                             border: OutlineInputBorder(),
                             isDense: true,
                             contentPadding: EdgeInsets.symmetric(
@@ -105,7 +111,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         const Text(
                           "By Order Status",
                           style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.bold),
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                         const SizedBox(height: 8),
                         Column(
@@ -165,7 +173,9 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                         const Text(
                           "By Date",
                           style: TextStyle(
-                              fontSize: 16, fontWeight: FontWeight.bold),
+                              fontSize: 16,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black),
                         ),
                         const SizedBox(height: 8),
                         Row(
@@ -185,10 +195,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(startDate == null
-                                          ? "Start Date"
-                                          : DateFormat('dd/MM/yyyy')
-                                              .format(startDate!)),
+                                      Text(
+                                        startDate == null
+                                            ? "Start Date"
+                                            : DateFormat('dd/MM/yyyy')
+                                                .format(startDate!),
+                                        style: const TextStyle(
+                                            color: Colors.black),
+                                      ),
                                       Image.asset(
                                         "assets/calendar.png",
                                         width: 18,
@@ -215,10 +229,14 @@ class _FilterBottomSheetState extends State<FilterBottomSheet> {
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text(endDate == null
-                                          ? "End Date"
-                                          : DateFormat('dd/MM/yyyy')
-                                              .format(endDate!)),
+                                      Text(
+                                        endDate == null
+                                            ? "End Date"
+                                            : DateFormat('dd/MM/yyyy')
+                                                .format(endDate!),
+                                        style: const TextStyle(
+                                            color: Colors.black),
+                                      ),
                                       Image.asset(
                                         "assets/calendar.png",
                                         width: 18,

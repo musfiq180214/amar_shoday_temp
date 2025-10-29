@@ -3,6 +3,7 @@ import 'package:amar_shoday/features/forgot_passward/create_new_pass.dart';
 import 'package:amar_shoday/features/forgot_passward/forgot1.dart';
 import 'package:amar_shoday/features/forgot_passward/otp_varification.dart';
 import 'package:amar_shoday/features/forgot_passward/otp_varified.dart';
+import 'package:amar_shoday/features/order/presentation/order_details.dart';
 import 'package:amar_shoday/features/order/presentation/order_page.dart';
 import 'package:amar_shoday/features/profile/presentation/profile_screen.dart';
 import 'package:amar_shoday/features/sign_up/presentation/sign_up_screen1.dart';
@@ -152,6 +153,14 @@ class AppRouter {
         return MaterialPageRoute(
           settings: const RouteSettings(name: RouteNames.AllCategories),
           builder: (_) => const AllCategoriesScreen(),
+        );
+
+      case RouteNames.orderDetails:
+        final args = settings.arguments as Map<String, dynamic>?;
+        final orderId = args?['orderId'] as String? ?? '';
+        return MaterialPageRoute(
+          settings: const RouteSettings(name: RouteNames.orderDetails),
+          builder: (_) => OrderDetailsPage(orderId: orderId),
         );
 
       default:

@@ -46,10 +46,14 @@ class OrderCard extends StatelessWidget {
                 // Row 1
                 Row(
                   children: [
-                    const Text("ID: "),
+                    const Text(
+                      "ID: ",
+                      style: TextStyle(color: Colors.black),
+                    ),
                     Text(
                       order.id,
-                      style: const TextStyle(fontWeight: FontWeight.bold),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, color: Colors.black),
                     ),
                     const SizedBox(width: 60),
                     Row(
@@ -62,7 +66,8 @@ class OrderCard extends StatelessWidget {
                           ),
                           const SizedBox(width: 4),
                         ],
-                        Text(order.time),
+                        Text(order.time,
+                            style: const TextStyle(color: Colors.black)),
                       ],
                     ),
                   ],
@@ -74,8 +79,10 @@ class OrderCard extends StatelessWidget {
                 // Row 2
                 Row(
                   children: [
-                    const Text("Items No. "),
-                    Text("${order.items}"),
+                    const Text("Items No. ",
+                        style: TextStyle(color: Colors.black)),
+                    Text("${order.items}",
+                        style: const TextStyle(color: Colors.black)),
                     const SizedBox(width: 115),
                     Container(
                       padding: const EdgeInsets.symmetric(
@@ -98,7 +105,10 @@ class OrderCard extends StatelessWidget {
                 Row(
                   children: [
                     if (order.queue != null) ...[
-                      const Text("Queue No."),
+                      const Text(
+                        "Queue No.",
+                        style: TextStyle(color: Colors.black),
+                      ),
                       const SizedBox(width: 4),
                       CircleAvatar(
                         radius: 12,

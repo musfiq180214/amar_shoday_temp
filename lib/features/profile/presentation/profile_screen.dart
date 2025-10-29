@@ -162,7 +162,10 @@ class _ProfileViewState extends ConsumerState<_ProfileView> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               const Text("Personal Info",
-                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+                  style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black)),
               IconButton(
                 icon: Icon(_isEditing ? Icons.save : Icons.edit,
                     color: Colors.blue),
@@ -226,7 +229,10 @@ class _ProfileViewState extends ConsumerState<_ProfileView> {
 
           // 🏠 Address Section
           const Text("Addresses",
-              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+              style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black)),
           const SizedBox(height: 12),
           if (widget.user.addresses.isEmpty)
             const Text("No saved addresses found.")
@@ -253,7 +259,9 @@ class _ProfileViewState extends ConsumerState<_ProfileView> {
                       children: [
                         Text(addr.title,
                             style: const TextStyle(
-                                fontWeight: FontWeight.bold, fontSize: 16)),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                color: Colors.black)),
                         const Row(
                           children: [
                             Icon(Icons.edit, color: Colors.blue, size: 20),
@@ -265,8 +273,11 @@ class _ProfileViewState extends ConsumerState<_ProfileView> {
                       ],
                     ),
                     const SizedBox(height: 6),
-                    Text(addr.details ??
-                        "H-02, R-10, Bosila Garden City, Mohammadpur, Dhaka."),
+                    Text(
+                      addr.details ??
+                          "H-02, R-10, Bosila Garden City, Mohammadpur, Dhaka.",
+                      style: const TextStyle(color: Colors.black),
+                    ),
                   ],
                 ),
               ),

@@ -22,6 +22,7 @@ class _AllCategoriesScreenState extends ConsumerState<AllCategoriesScreen> {
     final categoriesAsync = ref.watch(categoriesProvider);
 
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
         title: const Text("all_categories").tr(),
         backgroundColor: Colors.indigo.shade900,
@@ -29,7 +30,11 @@ class _AllCategoriesScreenState extends ConsumerState<AllCategoriesScreen> {
       body: categoriesAsync.when(
         data: (categories) {
           if (categories.isEmpty) {
-            return const Center(child: Text('No categories available'));
+            return const Center(
+                child: Text(
+              'No categories available',
+              style: TextStyle(color: Colors.black),
+            ));
           }
 
           // ✅ Select first category initially (only once)
@@ -171,7 +176,9 @@ class _AllCategoriesScreenState extends ConsumerState<AllCategoriesScreen> {
                                   child: Padding(
                                     padding: EdgeInsets.all(24.0),
                                     child: Text(
-                                        'Sorry! No products found in this category'),
+                                      'Sorry! No products found in this category',
+                                      style: TextStyle(color: Colors.black),
+                                    ),
                                   ),
                                 );
                               }
@@ -251,7 +258,11 @@ class _AllCategoriesScreenState extends ConsumerState<AllCategoriesScreen> {
                                               },
                                             )
                                           else
-                                            const Text('No products available'),
+                                            const Text(
+                                              'No products available',
+                                              style: TextStyle(
+                                                  color: Colors.black),
+                                            ),
                                           const SizedBox(height: 16),
                                         ],
                                       );
@@ -279,7 +290,10 @@ class _AllCategoriesScreenState extends ConsumerState<AllCategoriesScreen> {
                         },
                       )
                     : const Center(
-                        child: Text('Select a category to view products'),
+                        child: Text(
+                          'Select a category to view products',
+                          style: TextStyle(color: Colors.black),
+                        ),
                       ),
               ),
             ],
